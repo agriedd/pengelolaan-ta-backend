@@ -1,16 +1,18 @@
-#Pengelolaan TA [Backend]
+# Pengelolaan TA [Backend]
 
-##start
+## start
 
-```cmd
-/pengelolaan-ta-backend$ composer install
+```cli
+
+$ composer install
+
 ```
 
-##todo 4/13/2020 10:40:02 AM
+## todo 4/13/2020 10:40:02 AM
 1. Migrasi Database
 2. Membuat RESTful API
 
 
-##author
+## author
 
-1. Agri Edd. Oematan
+1. Agri Edd. Oematan <dnr739528@gmail.com>

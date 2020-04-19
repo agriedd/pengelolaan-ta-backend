@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\QueryException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -49,6 +50,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if($exception instanceof HttpException && $request->wantsJSON())
+            return CustomHandler::http($request, $exception, parent::render($request, $exception));
+        elseif($exception instanceof QueryException)
+            //tidak jalan
+            if(!env("APP_DEBUG"))
+                return CustomHandler::query($request, $exception);
+        elseif($request->wantsJSON())
+            if(!env("APP_DEBUG"))
+                return response()->json(CustomHandler::format("terjadi sebuah kesalahan", $exception), 500);
         return parent::render($request, $exception);
     }
 }

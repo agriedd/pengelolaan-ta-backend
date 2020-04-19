@@ -12,7 +12,7 @@ use App\{
     Generator\JWT,
 };
 
-class Authenticate
+class SuperAdminMiddleware
 {
     /**
      * The authentication guard factory instance.

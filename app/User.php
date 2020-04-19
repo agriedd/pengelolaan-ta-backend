@@ -10,6 +10,11 @@ use Laravel\Lumen\Auth\Authorizable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
+    const ADMIN      = "admin";
+    const MAHASISWA  = "mahasiswa";
+    const DOSEN      = "dosen";
+
+
     use Authenticatable, Authorizable;
 
     /**
