@@ -78,8 +78,12 @@ class AdminRepository extends Repository
 	}
 
 
-	public static function getWithLastAuth($id){
-		return self::model()->info()->with(["riwayatTerakhir"])->find($id);
+	public static function getWithLastAuth($id, $token = null){
+		return self::model()->info()->with([
+				"riwayatTerakhir" => function($query) use ($token){
+					return $query->where("token", $token);
+				}
+			])->find($id);
 	}
 
 	/**

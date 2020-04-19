@@ -81,13 +81,16 @@ class Authenticate
                 /**
                  * jika akun ada dan token terakhir sama dengan token yang dikirim
                  * 
-                 * artinya user hanya boleh login sekali
-                 * atau hanya bisa login pada 1 perangkat saja
+                 * user dapat menggunakan token yang pernah terdaftar tanpa peduli itu aktif atau tidak
                  * 
-                 * @todo buat user bisa login semua perangkat
+                 * @todo buat user hanya bisa pakai token yang aktif saja
+                 * @todo tambah kolom last login pada tabel Riwayat Login
+                 * 
                  */
-                $user = Admin::getWithLastAuth($encoded->get("id"));
-                if(!$user || $user->riwayatTerakhir->token !== $token){
+                
+                $user = Admin::getWithLastAuth($encoded->get("id"), $token);
+
+                if(!$user){
                     $data->put("status", false);
                 }
                 break;
