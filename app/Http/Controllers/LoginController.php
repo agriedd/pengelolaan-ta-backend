@@ -45,7 +45,7 @@ class LoginController extends Controller
     		return parent::res(false, $user, "Username dan password tidak cocok.");
     	}
 
-    	
+
     	$jwt = JWT::make( JWT::payload( User::ADMIN, "http://localhost:8000", $user->id, 0 ) );
 
     	$collection->put("token", $jwt->get("token"));

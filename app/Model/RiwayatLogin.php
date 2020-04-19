@@ -12,9 +12,17 @@ class RiwayatLogin extends Model
 
 	//mutasi
 
-	function userable()
+	function user()
 	{
 		return $this->morphTo();
 	}
 
+	//relasi
+
+	//scope
+    public function scopeSuccess($query)
+    {
+    	return $query->where("status", "1");
+    }
+    
 }

@@ -81,6 +81,9 @@ $app->configure('app');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    
+    'active' => App\Http\Middleware\ActiveUserMiddleware::class,
+    'super' => App\Http\Middleware\SuperAdminMiddleware::class,
 ]);
 
 /*

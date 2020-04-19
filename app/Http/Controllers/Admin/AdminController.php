@@ -148,7 +148,7 @@ class AdminController extends Controller
     	$data = Collection::make($validator->getData());
 
     	$data_admin 			= Collection::make($data->only(["username", "password"]));
-    	$data_informasi_admin 	= Collection::make($data->only(["nama", "nip"]));
+    	$data_informasi_admin 	= Collection::make($data->only(["nama", "nip", "level"]));
 
     	/**
     	 * @var result_admin 				mengupdate data admin($id)

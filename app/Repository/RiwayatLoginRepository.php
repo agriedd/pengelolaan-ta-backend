@@ -32,7 +32,8 @@ class RiwayatLoginRepository extends Repository
 	}
 
 	public static function insert($status, $request, $collection, $user = null){
-		$collection = collect($request->all());
+
+		$collection = $collection->merge(collect($request->all()));
 
 		$collection
 			->put("ip_address", $request->ip())
@@ -41,12 +42,11 @@ class RiwayatLoginRepository extends Repository
 			->put("created_at", Carbon::now())
 			->put("updated_at", Carbon::now());
 
-		if($status)
-
-			return $user->riwayat()->insert( $collection->only([
+		if($status){
+			return $user->riwayat()->create( $collection->only([
 				"username", "ip_address", "headers", "status", "created_at", "updated_at", "token"
 			])->all() );
-
+		}
 		else
 
 			return self::model()->insert( $collection->only([

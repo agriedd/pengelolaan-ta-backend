@@ -46,7 +46,7 @@ class Authenticate
 
         if( $token = $this->getToken($request) ) {
             
-            $jwt = $this->checkToken($token);
+            $jwt = $this->checkToken($token, $request);
 
             if( !$jwt->get("status") && $jwt->get("expired") ){
                 return response()->json(CustomHandler::tokenExpired());
@@ -66,7 +66,7 @@ class Authenticate
         return $request->BearerToken() ?? $request->_token;
     }
 
-    public function checkToken($token){
+    public function checkToken($token, $request){
         $data = JWT::decode($token);
 
         if(!$data->get("status")){
@@ -74,16 +74,20 @@ class Authenticate
         }
 
         $encoded = collect($data->get("data"));
+        $user = null;
+
         switch ($encoded->get("typ")) {
             case User::ADMIN :
                 /**
-                 * jika akun admin sudah dinonaktifkan atau tidak ada
+                 * jika akun ada dan token terakhir sama dengan token yang dikirim
                  * 
-                 * @todo cek token admin yang tersimpan pada riwayat login
+                 * artinya user hanya boleh login sekali
+                 * atau hanya bisa login pada 1 perangkat saja
+                 * 
+                 * @todo buat user bisa login semua perangkat
                  */
-                $admin = Admin::get($encoded->get("id"));
-
-                if(!$admin || $admin->status === 0){
+                $user = Admin::getWithLastAuth($encoded->get("id"));
+                if(!$user || $user->riwayatTerakhir->token !== $token){
                     $data->put("status", false);
                 }
                 break;
@@ -92,6 +96,9 @@ class Authenticate
                 break;
         }
 
+        //inject request
+        $request->user = $user;
+        
         return $data;
     }
 }

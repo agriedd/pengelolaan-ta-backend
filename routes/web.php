@@ -26,7 +26,7 @@ $router->post('/admin/', 'Admin\AdminController@insert');
 $router->get('/admin/{id}', [ 'middleware' => 'auth', 'uses' => 'Admin\AdminController@get']);
 $router->put('/admin/{id}', 'Admin\AdminController@update');
 
-$router->get('/riwayat/', 'RiwayatLoginController@getAll');
+$router->get('/riwayat/', [ 'middleware' => [ 'auth', 'active', 'super' ], 'uses' => 'RiwayatLoginController@getAll' ]);
 
 // $router->post('/login', "LoginController@loginPost");
 

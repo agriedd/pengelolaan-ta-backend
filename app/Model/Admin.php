@@ -51,7 +51,11 @@ class Admin extends Model
     //relation
     public function riwayat()
     {
-        return $this->morphMany(RiwayatLogin::class, 'userable');
+        return $this->morphMany(RiwayatLogin::class, 'user');
+    }
+    public function riwayatTerakhir()
+    {
+        return $this->morphOne(RiwayatLogin::class, 'user')->latest()->success()->limit(1);
     }
 
     /**
@@ -79,4 +83,5 @@ class Admin extends Model
     			return $join->on("admin.id", "=", "informasi.id_admin");
     		});
     }
+
 }

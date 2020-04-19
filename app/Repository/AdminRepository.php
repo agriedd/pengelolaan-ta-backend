@@ -78,6 +78,9 @@ class AdminRepository extends Repository
 	}
 
 
+	public static function getWithLastAuth($id){
+		return self::model()->info()->with(["riwayatTerakhir"])->find($id);
+	}
 
 	/**
 	 * @method insert

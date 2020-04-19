@@ -7,12 +7,11 @@ use Illuminate\Contracts\Auth\Factory as Auth;
 use App\{
     User,
     Admin as ModelAdmin,
-    Repository\AdminRepository as Admin,
 
     Exceptions\CustomHandler,
 };
 
-class SuperAdminMiddleware
+class ActiveUserMiddleware
 {
     /**
      * The authentication guard factory instance.
@@ -43,7 +42,7 @@ class SuperAdminMiddleware
     public function handle($request, Closure $next, $guard = null)
     {
 
-        if(!$request->user instanceof ModelAdmin && $request->user->level != 1){
+        if(!$request->user || $request->user->status == 0){
             return response()->json(CustomHandler::unauthorized());
         }
         return $next($request);
