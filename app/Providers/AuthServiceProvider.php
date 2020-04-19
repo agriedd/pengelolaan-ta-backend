@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\{
     User,
-    Model\Admin,
+    Repository\AdminRepository as Admin,
 };
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         //         return User::where('api_token', $request->input('api_token'))->first();
         //     }
         // });
-
+        return Admin::get(1);
         
     }
 }
