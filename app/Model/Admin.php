@@ -55,7 +55,10 @@ class Admin extends Model
     }
     public function riwayatTerakhir()
     {
-        return $this->morphOne(RiwayatLogin::class, 'user')->latest()->success()->limit(1);
+        return $this->morphOne(RiwayatLogin::class, 'user')
+            ->lastActive()
+            ->success()
+            ->limit(1);
     }
 
     /**

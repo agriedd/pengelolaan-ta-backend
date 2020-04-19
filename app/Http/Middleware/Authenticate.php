@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Factory as Auth;
 use App\{
     User,
     Repository\AdminRepository as Admin,
+    Repository\RiwayatLoginRepository as Riwayat,
 
     Exceptions\CustomHandler,
     Generator\JWT,
@@ -59,6 +60,12 @@ class Authenticate
         }
         // }
 
+
+        /**
+         * @var update waktu kadaluarsa token +1 minggu
+         */
+        Riwayat::updateExpiredDate( $request->user->riwayatTerakhir );
+
         return $next($request);
     }
 
@@ -66,6 +73,12 @@ class Authenticate
         return $request->BearerToken() ?? $request->_token;
     }
 
+
+    /**
+     * 
+     * @todo pindahkan proses ke auth
+     * 
+     */
     public function checkToken($token, $request){
         $data = JWT::decode($token);
 
@@ -79,18 +92,19 @@ class Authenticate
         switch ($encoded->get("typ")) {
             case User::ADMIN :
                 /**
-                 * jika akun ada dan token terakhir sama dengan token yang dikirim
+                 * jika akun ada dan token terakhir sama dengan token yang dikirim dan token
+                 * belum kadaluarsa
                  * 
-                 * user dapat menggunakan token yang pernah terdaftar tanpa peduli itu aktif atau tidak
-                 * 
-                 * @todo buat user hanya bisa pakai token yang aktif saja
-                 * @todo tambah kolom last login pada tabel Riwayat Login
+                 * user dapat menggunakan token yang pernah terdaftar sebelum waktu expired 1 minggu
+                 * setiap kali token digunakan maka waktu expired akan diperpanjang 1 minggu seterusnya
+                 * setiap kali user melakukan login token baru akan diberi guna mencatat aktivitas
+                 * atau riwayat login user
                  * 
                  */
                 
                 $user = Admin::getWithLastAuth($encoded->get("id"), $token);
 
-                if(!$user){
+                if(!$user || !$user->riwayatTerakhir){
                     $data->put("status", false);
                 }
                 break;

@@ -7,6 +7,9 @@ use Carbon\Carbon;
 
 class RiwayatLoginRepository extends Repository
 {
+
+	const EXPIRED_LONG = 1; //weeks
+
 	public static function model(){
 		return new RiwayatLogin;
 	}
@@ -35,16 +38,19 @@ class RiwayatLoginRepository extends Repository
 
 		$collection = $collection->merge(collect($request->all()));
 
+
 		$collection
 			->put("ip_address", $request->ip())
 			->put("headers", json_encode($request->header()))
 			->put("status", $status ? "1" : "0")
 			->put("created_at", Carbon::now())
-			->put("updated_at", Carbon::now());
+			->put("updated_at", Carbon::now())
+
+			->put("expired_at", self::expiredDate());
 
 		if($status){
 			return $user->riwayat()->create( $collection->only([
-				"username", "ip_address", "headers", "status", "created_at", "updated_at", "token"
+				"username", "ip_address", "headers", "status", "created_at", "updated_at", "token", "expired_at"
 			])->all() );
 		}
 		else
@@ -52,5 +58,14 @@ class RiwayatLoginRepository extends Repository
 			return self::model()->insert( $collection->only([
 				"username", "ip_address", "headers", "status", "created_at", "updated_at"
 			])->all() );
+	}
+
+	public static function expiredDate(){
+		$now = Carbon::now();
+		return $now->addWeeks( self::EXPIRED_LONG );
+	}
+
+	public static function updateExpiredDate(RiwayatLogin $riwayat){
+		return $riwayat->update( [ "expired_at" => self::expiredDate(), "updated_at" => Carbon::now() ] );
 	}
 }

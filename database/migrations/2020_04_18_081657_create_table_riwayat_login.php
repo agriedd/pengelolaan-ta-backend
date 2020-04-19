@@ -27,14 +27,10 @@ class CreateTableRiwayatLogin extends Migration
             $table->enum("status", [0,1])->default(0);
             $table->string("token")->nullable();
 
-            /**
-             * @deprecated
-             * 
-             */
-            // $table->timestamp("login_at")->nullable();
-            
             $table->string("ip_address")->nullable();
             $table->text("headers")->nullable();
+
+            $table->datetime("expired_at")->nullable();
 
             //additonal
             $table->timestamps();

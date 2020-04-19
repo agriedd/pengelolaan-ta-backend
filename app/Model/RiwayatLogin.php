@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class RiwayatLogin extends Model
 {
@@ -23,6 +24,10 @@ class RiwayatLogin extends Model
     public function scopeSuccess($query)
     {
     	return $query->where("status", "1");
+    }
+    public function scopeLastActive($query)
+    {
+    	return $query->where("expired_at", ">=", DB::raw("NOW()"))->orderBy("expired_at", "DESC");
     }
     
 }
