@@ -11,12 +11,13 @@ use App\{
 	Repository\RiwayatLoginRepository as Riwayat,
 	Generator\JWT,
 };
-use \Validator;
-
+use Validator;
+use Auth;
 class LoginController extends Controller
 {
     function loginPost(Request $request)
     {
+        dd(Auth::user());
 
     	$validator = $this->dataValidate($request);
 

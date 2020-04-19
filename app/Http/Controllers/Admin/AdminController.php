@@ -46,6 +46,7 @@ class AdminController extends Controller
      * 
      */
     function getAll(Request $request){
+        dd($request);
     	$data 	= Admin::getAll();
     	$status = $data ? true : false;
     	return parent::res($status, $data);

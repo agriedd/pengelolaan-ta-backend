@@ -19,14 +19,28 @@ use App\Model\Admin as Admin;
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
 $router->post('/login', "LoginController@loginPost");
 
-$router->get('/admin/', 'Admin\AdminController@getAll');
-$router->post('/admin/', 'Admin\AdminController@insert');
-$router->get('/admin/{id}', [ 'middleware' => 'auth', 'uses' => 'Admin\AdminController@get']);
-$router->put('/admin/{id}', 'Admin\AdminController@update');
+Route::group([
+	'middleware' 	=> ['auth', 'active', 'super'],
+	'prefix'	 	=> '/'
+], function($router){
 
-$router->get('/riwayat/', [ 'middleware' => [ 'auth', 'active', 'super' ], 'uses' => 'RiwayatLoginController@getAll' ]);
+	Route::group([
+		'prefix'	=> '/admin',
+	], function($router){
+			$router->get('/', 'Admin\AdminController@getAll');
+			$router->post('/', 'Admin\AdminController@insert');
+			$router->get('/{id}', 'Admin\AdminController@get');
+			$router->put('/{id}', 'Admin\AdminController@update');
+		}
+	);
+
+	$router->get('/riwayat/', 'RiwayatLoginController@getAll');
+
+} );
+
 
 // $router->post('/login', "LoginController@loginPost");
 
