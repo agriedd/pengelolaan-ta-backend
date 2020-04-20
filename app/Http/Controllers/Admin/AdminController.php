@@ -99,7 +99,14 @@ class AdminController extends Controller
 
     /**
      * menambah data admin dengan menggunakan informasi dosen
+     * username dan password mungkin akan sama dengan data dosen
      * 
+     * @todo buat model Dosen
+     * @todo tambah relasi model informasi admin dengan dosen morph 1-1
+     * @todo tambah relasi model admin dengan dosen morph 1-1
+     * 
+     * @todo tambah tabel pegawai
+     * @todo tambah method insertByPegawai
      * 
      */
     function insertByDosen(Request $request, $id){
@@ -110,8 +117,6 @@ class AdminController extends Controller
 
         if($validator->fails())
             return parent::res(!$validator->fails(), null, null, $validator->errors());
-
-        die();
 
         $data = self::getAdminProps($validator);
         $info = self::getInfoAdminProps($validator);
@@ -126,6 +131,14 @@ class AdminController extends Controller
         return parent::res($admin ? true : false, $admin);
     }
 
+    /**
+     * validasi request yang diterima sebelum data ditambahkan
+     * 
+     * @param request
+     * 
+     * @return Validator
+     * 
+     */
     static function insertValidate(Request $request){
         return Validator::make(
             $request->all(),
@@ -188,9 +201,26 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * mengambil data hasil validasi untuk model Admin
+     * 
+     * @param Validator validator
+     * 
+     * @return Collection
+     * 
+     */
     static function getAdminProps($validator){
         return collect($validator->getData())->only([ "username", "password" ]);
     }
+
+    /**
+     * mengambil data hasil validasi untuk informasi Admin
+     * 
+     * @param Validator validator
+     * 
+     * @return Collection
+     * 
+     */
     static function getInfoAdminProps($validator){
         return collect($validator->getData())->only([ "nama", "nip", "status", "level", "user_id", "user_type" ]);
     }
