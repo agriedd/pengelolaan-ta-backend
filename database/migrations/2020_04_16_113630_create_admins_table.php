@@ -19,9 +19,7 @@ class CreateAdminsTable extends Migration
 
             // relationship
             $table->unsignedBigInteger('id_jurusan')->nullable();
-            // $table->foreign('id_jurusan')->references('id')->on('jurusan')
-            //     ->onDelete('set null')
-            //     ->onUpdate('cascade');
+
 
             //others
             $table->string("username", 20)->unique();

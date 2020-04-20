@@ -43,8 +43,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        // if ($this->auth->guard($guard)->guest()) {
-
+        
         if( $token = $this->getToken($request) ) {
             
             $jwt = $this->checkToken($token, $request);
@@ -58,7 +57,6 @@ class Authenticate
         } else {
             return response()->json(CustomHandler::unauthorized());
         }
-        // }
 
 
         /**
@@ -75,8 +73,10 @@ class Authenticate
 
 
     /**
+     * pengecekan dan validasi token hingga aktivitas login
      * 
      * @todo pindahkan proses ke auth
+     * @todo untuk filter user lain selain admin
      * 
      */
     public function checkToken($token, $request){

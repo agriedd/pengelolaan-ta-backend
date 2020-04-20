@@ -79,12 +79,20 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
+$app->middleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    
+    'active' => App\Http\Middleware\ActiveUserMiddleware::class,
+    'super' => App\Http\Middleware\SuperAdminMiddleware::class,
+]);
+
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     
     'active' => App\Http\Middleware\ActiveUserMiddleware::class,
     'super' => App\Http\Middleware\SuperAdminMiddleware::class,
 ]);
+
 
 /*
 |--------------------------------------------------------------------------

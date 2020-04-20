@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use App\{
     User,
-    Admin as ModelAdmin,
+    Model\Admin as ModelAdmin,
     Repository\AdminRepository as Admin,
 
     Exceptions\CustomHandler,
@@ -42,8 +42,14 @@ class SuperAdminMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        /**
+         * pengecekan apakah admin bersangkutan adalah admin super
+         * 
+         * @todo cast pada model admin mungkin merubah type data ke boolean
+         * 
+         */
 
-        if(!$request->user instanceof ModelAdmin && $request->user->level != 1){
+        if(!app("auth")->user() instanceof ModelAdmin || !app("auth")->user()->level){
             return response()->json(CustomHandler::unauthorized());
         }
         return $next($request);

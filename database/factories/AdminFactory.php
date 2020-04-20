@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 $factory->define(Admin::class, function (Faker $faker) {
     return [
-        'username' => $faker->username,
+        'username' => "agriedd",
         'password' => Hash::make('password'),
         'created_at' => Carbon::now(),
     ];

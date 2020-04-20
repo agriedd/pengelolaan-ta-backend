@@ -22,25 +22,44 @@ $router->get('/', function () use ($router) {
 
 $router->post('/login', "LoginController@loginPost");
 
-Route::group([
-	'middleware' 	=> ['auth', 'active', 'super'],
-	'prefix'	 	=> '/'
-], function($router){
+Route::group([ 'prefix'	=> '/admin' ], function($router){
 
-	Route::group([
-		'prefix'	=> '/admin',
-	], function($router){
-			$router->get('/', 'Admin\AdminController@getAll');
-			$router->post('/', 'Admin\AdminController@insert');
-			$router->get('/{id}', 'Admin\AdminController@get');
-			$router->put('/{id}', 'Admin\AdminController@update');
-		}
-	);
+	/**
+	 * @api /admin
+	 * 
+	 * @uses AdminController only SuperAdmin
+	 * 
+	 */
+	$router->get('/', 'Admin\AdminController@getAll');
+	$router->post('/', 'Admin\AdminController@insert');
+	$router->post('/dosen/{id}', 'Admin\AdminController@insertByDosen');
+	$router->get('/{id}', 'Admin\AdminController@get');
+	$router->put('/{id}', 'Admin\AdminController@update');
 
-	$router->get('/riwayat/', 'RiwayatLoginController@getAll');
+});
 
-} );
+Route::group(['prefix' => '/riwayat'], function($router){
 
+	/**
+	 * @api /riwayat
+	 * 
+	 * @uses only Super Admin | Admin can access
+	 * 
+	 */
+	$router->get('/', 'RiwayatLoginController@getAll');
+});
+
+Route::group(['prefix' => '/jurusan'], function($router){
+
+	$router->get('/', 'JurusanController@getAll');
+	$router->post('/', 'SuperAdmin\JurusanController@insert');
+	$router->put('/{id: [0-9]+}', 'Admin\JurusanController@update');
+	$router->put('/{id: [a-zA-Z0-9\-\_]{4,} }', 'Admin\JurusanController@updateByKdJurusan');
+	$router->get('/{id: [0-9]+}', 'JurusanController@get');
+	$router->get('/{id: [a-zA-Z0-9\-\_]{4,} }', 'JurusanController@getByKdJurusan');
+	$router->delete('/{id: [0-9]+}', 'SuperAdmin\JurusanController@delete');
+
+});
 
 // $router->post('/login', "LoginController@loginPost");
 

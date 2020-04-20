@@ -21,6 +21,10 @@ class Admin extends Model
     	'password'
     ];
 
+    protected $casts = [
+        "level" => "boolean",
+    ];
+
     protected $guarded = [];
 
 
@@ -48,11 +52,27 @@ class Admin extends Model
     }
 
 
-    //relation
+    public function informasi()
+    {
+        return $this->hasMany(InformasiAdmin::class, "id_admin");
+    }
+    /**
+     * relasi morph 1 - many dengan user
+     * 
+     * @return Query
+     * 
+     */
     public function riwayat()
     {
         return $this->morphMany(RiwayatLogin::class, 'user');
     }
+
+    /**
+     * relasi morph 1 - 1 dengan user, user akan memiliki
+     * relasi dengan riwayat login terakhir miliknya
+     * 
+     * @return Query
+     */
     public function riwayatTerakhir()
     {
         return $this->morphOne(RiwayatLogin::class, 'user')

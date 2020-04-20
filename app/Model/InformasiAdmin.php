@@ -11,4 +11,9 @@ class InformasiAdmin extends Model
 		"status",
 		"level"
 	];
+
+	public function admin()
+	{
+		return $this->belongsTo(Admin::class, "id_admin", "id");
+	}
 }

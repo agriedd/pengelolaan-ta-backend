@@ -10,21 +10,41 @@ class RiwayatLogin extends Model
 	protected $table = "riwayat_login";
 	protected $guarded = [];
 
-
-	//mutasi
-
+	/**
+	 * relasi morph untuk user
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	function user()
 	{
 		return $this->morphTo();
 	}
 
-	//relasi
 
-	//scope
+	/**
+	 * scope success untuk mengambil riwayat login dengan status
+	 * sukses saja
+	 * 
+	 * @param query
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
     public function scopeSuccess($query)
     {
     	return $query->where("status", "1");
     }
+
+	/**
+	 * scope last_active untuk mengambil riwayat login yang belum
+	 * kadaluarsa
+	 * 
+	 * @param query
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
     public function scopeLastActive($query)
     {
     	return $query->where("expired_at", ">=", DB::raw("NOW()"))->orderBy("expired_at", "DESC");

@@ -41,7 +41,10 @@ class ActiveUserMiddleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-
+        /**
+         * middleware untuk mengecek user berstatus aktif
+         * 
+         */
         if(!$request->user || $request->user->status == 0){
             return response()->json(CustomHandler::unauthorized());
         }

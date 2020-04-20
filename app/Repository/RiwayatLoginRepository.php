@@ -62,7 +62,7 @@ class RiwayatLoginRepository extends Repository
 
 	public static function expiredDate(){
 		$now = Carbon::now();
-		return $now->addWeeks( self::EXPIRED_LONG );
+		return $now->addWeeks( env("JWT_LONG", self::EXPIRED_LONG) );
 	}
 
 	public static function updateExpiredDate(RiwayatLogin $riwayat){
