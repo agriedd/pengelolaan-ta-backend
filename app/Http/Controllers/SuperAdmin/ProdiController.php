@@ -88,6 +88,57 @@ class ProdiController extends Controller
 		]);
 	}
 
+	public function update(Request $request, $id){
+		$request->request->add([ "id" => $id ]);
+
+		$validator = self::updateValidate($request);
+
+		if($validator->fails())
+			return parent::res(false, null, null, $validator->errors());
+
+		$data = self::getProdiProps($validator);
+		$info = self::getInfoProdiProps($validator);
+
+		//update
+
+	}
+
+	static function updateValidate(Request $request){
+		return Validator::make( $request->all(), [
+			/**
+			 * for Prodi
+			 * 
+			 * @property nama
+			 * @property id_jurusan
+			 *
+			 * @todo cek kesamaan nama prodi
+			 * 
+			 */
+			"nama"	=> "min:3",
+			"id_jurusan"	=> [
+				function($attribute, $value, $fails){
+					if(!Jurusan::get($value))
+						return $fails($value);
+				}
+			],
+
+			/**
+			 * for Informasi Prodi
+			 * 
+			 * @property email
+			 * @property telepon
+			 * @property media_sosial
+			 * @property keterangan
+			 * 
+			 */
+			"email"			=> "email",
+			"media_sosial"	=> "json",
+		], [
+			"min"	=> "Kolom :attribute tidak boleh kurang dari :min karakter",
+			"email"	=> "Email tidak valid",
+		]);
+	}
+
 	static function getProdiProps($validator)
 	{
 		return collect($validator->getData())->only(["nama"]);
