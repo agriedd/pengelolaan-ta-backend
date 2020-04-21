@@ -22,7 +22,7 @@ class CreateDosenTable extends Migration
                 ->onUpdate("cascade");
 
             // $table->string("nip", 18)->nullable();
-            $table->string("username");
+            $table->string("username")->unique();
             $table->string("password");
 
             $table->timestamps();

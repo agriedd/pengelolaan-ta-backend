@@ -61,5 +61,10 @@ Route::group(['prefix' => '/jurusan'], function($router){
 
 });
 
-// $router->post('/login', "LoginController@loginPost");
+Route::group(['prefix' => '/dosen'], function($router){
 
+	$router->get('/', 'DosenController@getAll');
+	$router->get('/{id: [0-9]{18} }', 'DosenController@getByNip');
+	$router->get('/{id: [0-9]+}', 'DosenController@get');
+
+});
