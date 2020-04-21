@@ -11,6 +11,10 @@ use Illuminate\Support\Collection;
 
 class AdminRepository extends Repository
 {
+	/**
+	 * @todo buat interface yang mewajibkan method ini
+	 * 
+	 */
 	public static function model(){
 		return new Admin;
 	}

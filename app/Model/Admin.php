@@ -2,18 +2,11 @@
 
 namespace App\Model;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Laravel\Lumen\Auth\Authorizable;
-
 use Illuminate\Database\Eloquent\Model;
 use App\Repository\InformasiAdminRepository;
 
 class Admin extends Model
 {
-    use Authenticatable, Authorizable;
-
 
     protected $table = "admin";
 
@@ -28,34 +21,17 @@ class Admin extends Model
     protected $guarded = [];
 
 
-
-    // Rest omitted for brevity
-
     /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
+     * relasi has Many dengan Informasi Admin
+     * 
+     * @return QueryBuilder
+     * 
      */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-
     public function informasi()
     {
         return $this->hasMany(InformasiAdmin::class, "id_admin");
     }
+
     /**
      * relasi morph 1 - many dengan user
      * 

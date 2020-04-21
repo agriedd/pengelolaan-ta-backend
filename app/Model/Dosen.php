@@ -11,6 +11,13 @@ class Dosen extends Model
 
 	protected $hidden = ["password"];
 
+
+	/**
+	 * Relasi hasMany dengan Informasi Dosen
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	function informasi(){
 		return $this->hasMany(InformasiDosen::class, "id_dosen", "id");
 	}

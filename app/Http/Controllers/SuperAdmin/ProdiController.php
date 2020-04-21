@@ -157,4 +157,9 @@ class ProdiController extends Controller
 	{
 		return collect($validator->getData())->only(["email", "telepon", "media_sosial", "keterangan"]);
 	}
+
+	public function delete(Request $request, $id){
+    	$result = Prodi::delete($id);
+    	return parent::res($result ? true : false, [ "undo" => false]);
+	}
 }

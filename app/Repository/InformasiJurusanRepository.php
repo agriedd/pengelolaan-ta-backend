@@ -17,6 +17,15 @@ class InformasiJurusanRepository extends Model
 		return new InformasiJurusan;
 	}
 
+	/**
+	 * menambah sebuah data informasi jurusan baru
+	 * 
+	 * @param Collection $request
+	 * @param Model\Jurusan $jurusan
+	 * 
+	 * @return Model\InformasiJurusan
+	 * 
+	 */
 	public static function insert($request, Jurusan $jurusan){
 		$request
 			->put("created_at", Carbon::now())

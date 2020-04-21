@@ -72,9 +72,15 @@ Route::group(['prefix' => '/dosen'], function($router){
 
 Route::group(['prefix' => '/prodi'], function($router){
 
+	/**
+	 * @todo tambah kolom kd_prodi
+	 * @todo router by kd_prodi
+	 * 
+	 */
 	$router->get('/', 'ProdiController@getAll');
 	$router->get('/{id: [0-9]+}', 'ProdiController@get');
 	$router->put('/{id: [0-9]+}', 'Admin\ProdiController@update');
 	$router->post('/', 'SuperAdmin\ProdiController@insert');
+	$router->delete('/{id: [0-9]+}', 'SuperAdmin\ProdiController@delete');
 
 });

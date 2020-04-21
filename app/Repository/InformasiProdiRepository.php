@@ -15,6 +15,15 @@ class InformasiProdiRepository extends Repository
 		return new InformasiProdi;
 	}
 
+	/**
+	 * menambah sebuah data informasiProdi baru
+	 * 
+	 * @param Collection $collection
+	 * @param Model\Prodi $prodi
+	 * 
+	 * @return Model\InformasiProdi
+	 * 
+	 */
 	public static function insert($collection, Prodi $prodi){
 		$collection
 			->put("created_at", Carbon::now())
@@ -22,6 +31,12 @@ class InformasiProdiRepository extends Repository
 		return $prodi->informasi()->create($collection->all());
 	}
 
+	/**
+	 * sub query untuk joinSub dengan informasiProdi
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	public static function getLatestProdiQuery(){
 		return self::model()->groupBy(DB::raw("id_prodi DESC"));;
 	}

@@ -39,4 +39,11 @@ class ProdiRepository extends Repository
 	{
 		return self::model()->info()->with(["jurusan"])->paginate($request->has("limit") ? $request->limit : 10);
 	}
+
+	static function remove($id){
+		return self::delete($id);
+	}
+	static function delete($id){
+		return self::model()->find($id)->delete();
+	}
 }

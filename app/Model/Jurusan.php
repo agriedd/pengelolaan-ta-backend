@@ -12,11 +12,22 @@ class Jurusan extends Model
 	protected $table = "jurusan";
 	protected $guarded = [];
 
-
+	/**
+	 * relasi hasMany dengan InformasiJurusan
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	public function informasi(){
 		return $this->hasMany(InformasiJurusan::class, "id_jurusan", "id");
 	}
 
+	/**
+	 * relasi hasManu dengan Prodi
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	public function prodi(){
 		return $this->hasMany(Prodi::class, "id_jurusan", "id");
 	}

@@ -12,6 +12,12 @@ class InformasiAdmin extends Model
 		"level"
 	];
 
+	/**
+	 * relasi belongsTo terhadap Model Admin
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
 	public function admin()
 	{
 		return $this->belongsTo(Admin::class, "id_admin", "id");
