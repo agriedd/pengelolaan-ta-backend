@@ -64,7 +64,16 @@ Route::group(['prefix' => '/jurusan'], function($router){
 Route::group(['prefix' => '/dosen'], function($router){
 
 	$router->get('/', 'DosenController@getAll');
+	$router->post('/', 'Admin\DosenController@insert');
 	$router->get('/{id: [0-9]{18} }', 'DosenController@getByNip');
 	$router->get('/{id: [0-9]+}', 'DosenController@get');
+
+});
+
+Route::group(['prefix' => '/prodi'], function($router){
+
+	$router->get('/', 'ProdiController@getAll');
+	$router->get('/{id: [0-9]+}', 'ProdiController@get');
+	$router->post('/', 'SuperAdmin\ProdiController@insert');
 
 });

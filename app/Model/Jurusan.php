@@ -17,6 +17,10 @@ class Jurusan extends Model
 		return $this->hasMany(InformasiJurusan::class, "id_jurusan", "id");
 	}
 
+	public function prodi(){
+		return $this->hasMany(Prodi::class, "id_jurusan", "id");
+	}
+
 	/**
 	 * scope untuk melakukan join dengan tabel informasiJurusan
 	 * 

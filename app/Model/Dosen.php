@@ -10,4 +10,8 @@ class Dosen extends Model
 	protected $guarded = [];
 
 	protected $hidden = ["password"];
+
+	function informasi(){
+		return $this->hasMany(InformasiDosen::class, "id_dosen", "id");
+	}
 }
