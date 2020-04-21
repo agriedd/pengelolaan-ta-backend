@@ -22,6 +22,11 @@ class ProdiRepository extends Repository
 		return $jurusan->prodi()->create( $collection->all() );
 	}
 
+	public static function update($collection, $id){
+		$collection->put("updated_at", Carbon::now());
+		return self::model()->find($id)->update( $collection->all() );
+	}
+
 	static function get($id)
 	{
 		return self::model()->info()->with(["jurusan"])->find($id);

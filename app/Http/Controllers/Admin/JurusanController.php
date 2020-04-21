@@ -55,7 +55,7 @@ class JurusanController extends Controller
 
 				'email' => "email",
 			], [
-				"emial" => "Format email tidak valid"
+				"email" => "Format email tidak valid"
 			]
 		);
 	}

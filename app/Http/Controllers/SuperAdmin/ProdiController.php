@@ -99,7 +99,11 @@ class ProdiController extends Controller
 		$data = self::getProdiProps($validator);
 		$info = self::getInfoProdiProps($validator);
 
-		//update
+		$result = Prodi::update($data, $id);
+		if($result)
+			InformasiProdi::insert($info, Prodi::get($id));
+
+		return parent::res($result ? true : false, Prodi::get($id));
 
 	}
 
@@ -114,11 +118,17 @@ class ProdiController extends Controller
 			 * @todo cek kesamaan nama prodi
 			 * 
 			 */
+			"id"	=> [
+				function($attribute, $value, $fails){
+					if(!Prodi::get($value))
+						return $fails("Prodi tidak ditemukan");
+				}
+			],
 			"nama"	=> "min:3",
 			"id_jurusan"	=> [
 				function($attribute, $value, $fails){
 					if(!Jurusan::get($value))
-						return $fails($value);
+						return $fails("Jurusan tidak ditemukan");
 				}
 			],
 
@@ -141,7 +151,7 @@ class ProdiController extends Controller
 
 	static function getProdiProps($validator)
 	{
-		return collect($validator->getData())->only(["nama"]);
+		return collect($validator->getData())->only(["nama", "id_jurusan"]);
 	}
 	static function getInfoProdiProps($validator)
 	{
