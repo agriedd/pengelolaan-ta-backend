@@ -85,7 +85,7 @@ class AdminRepository extends Repository
 	public static function getWithLastAuth($id, $token = null){
 		return self::model()->info()->with([
 				"riwayatTerakhir" => function($query) use ($token){
-					return $query->where("token", $token);
+					$query->where("token", $token);
 				}
 			])->find($id);
 	}
@@ -147,5 +147,13 @@ class AdminRepository extends Repository
 		return $this->model->info()
 			->where("username", $username)
 			->first();
+	}
+
+	public static function remove($id){
+		return self::delete($id);
+	}
+	public static function delete($id){
+		return self::model()->find($id)
+			->delete();
 	}
 }

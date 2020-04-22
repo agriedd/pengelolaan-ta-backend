@@ -80,10 +80,11 @@ $app->configure('app');
 // ]);
 
 $app->middleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+    // 'auth' => App\Http\Middleware\Authenticate::class,
     
-    'active' => App\Http\Middleware\ActiveUserMiddleware::class,
-    'super' => App\Http\Middleware\SuperAdminMiddleware::class,
+    // 'active' => App\Http\Middleware\ActiveUserMiddleware::class,
+    // 'super' => App\Http\Middleware\SuperAdminMiddleware::class,
+    // 'admin' => App\Http\Middleware\AdminMiddleware::class,
 ]);
 
 $app->routeMiddleware([
@@ -91,6 +92,7 @@ $app->routeMiddleware([
     
     'active' => App\Http\Middleware\ActiveUserMiddleware::class,
     'super' => App\Http\Middleware\SuperAdminMiddleware::class,
+    'admin' => App\Http\Middleware\AdminMiddleware::class,
 ]);
 
 

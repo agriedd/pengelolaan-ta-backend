@@ -8,6 +8,10 @@ use App\Model\{
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use DB;
+use Illuminate\Support\Facades\{
+	Hash,
+	Cache,
+};
 
 class InformasiAdminRepository extends Repository
 {
@@ -90,6 +94,9 @@ class InformasiAdminRepository extends Repository
 	 * 
 	 */
 	public static function insert($request, Admin $admin){
+
+		Cache::pull("admin_{$admin->id}");
+
 		$request = Collection::make($request->all());
 		$request
 			->put( "id_admin", $admin->id )

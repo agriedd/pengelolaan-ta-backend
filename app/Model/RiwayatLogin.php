@@ -9,6 +9,7 @@ class RiwayatLogin extends Model
 {
 	protected $table = "riwayat_login";
 	protected $guarded = [];
+	protected $hidden = ["token", "user_id", "user_type"];
 
 	/**
 	 * relasi morph untuk user

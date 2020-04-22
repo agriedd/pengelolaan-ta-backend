@@ -34,6 +34,14 @@ class RiwayatLoginRepository extends Repository
 		return self::model()->paginate($request->has("limit") ?? 10);
 	}
 
+	public static function getByUser($request, $user){
+		$data = $user->riwayat()
+			->with(["user"])
+			->latest()
+			->paginate($request->has("limit") ? $request->limit : 10);
+		return $data;
+	}
+
 	public static function insert($status, $request, $collection, $user = null){
 
 		$collection = $collection->merge(collect($request->all()));

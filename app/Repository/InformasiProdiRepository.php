@@ -10,8 +10,7 @@ use Carbon\Carbon;
 
 class InformasiProdiRepository extends Repository
 {
-	public static function model()
-	{
+	public static function model(){
 		return new InformasiProdi;
 	}
 
