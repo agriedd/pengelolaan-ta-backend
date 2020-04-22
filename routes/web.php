@@ -97,3 +97,15 @@ Route::group(['prefix' => 'prodi'], function($router){
 	Route::delete('/{id: [0-9]+}', 'SuperAdmin\ProdiController@delete');
 
 });
+
+
+
+/**
+ * router darurat
+ * 
+ */
+Route::group(['prefix' => 'edd'], function($router){
+	Route::get("/", function(){
+		return "Hello world!";
+	});
+});
