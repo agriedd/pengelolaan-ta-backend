@@ -50,5 +50,19 @@ class RiwayatLogin extends Model
     {
     	return $query->where("expired_at", ">=", DB::raw("NOW()"))->orderBy("expired_at", "DESC");
     }
+
+	/**
+	 * scope last_active untuk mengambil riwayat login yang belum
+	 * kadaluarsa
+	 * 
+	 * @param query
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
+    public function scopeActive($query)
+    {
+    	return $query->where("expired_at", ">=", DB::raw("NOW()"));
+    }
     
 }

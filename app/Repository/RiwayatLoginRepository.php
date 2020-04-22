@@ -42,6 +42,10 @@ class RiwayatLoginRepository extends Repository
 		return $data;
 	}
 
+	public static function getByToken($token){
+		return self::model()->with(["user"])->where("token", $token)->first();
+	}
+
 	public static function insert($status, $request, $collection, $user = null){
 
 		$collection = $collection->merge(collect($request->all()));
@@ -75,5 +79,15 @@ class RiwayatLoginRepository extends Repository
 
 	public static function updateExpiredDate(RiwayatLogin $riwayat){
 		return $riwayat->update( [ "expired_at" => self::expiredDate(), "updated_at" => Carbon::now() ] );
+	}
+
+	public static function logoutAll($user, $tokenExcept = null){
+		return $user->riwayat()
+			->active()
+			->success()
+			->when($tokenExcept, function($query){
+				$query->where("token", "<>", $tokenExcept);
+			})
+			->update([ "expired_at" => Carbon::now() ]);
 	}
 }

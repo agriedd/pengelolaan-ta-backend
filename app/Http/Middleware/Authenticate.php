@@ -51,6 +51,9 @@ class Authenticate
             if( !$jwt->get("status") && $jwt->get("expired") ){
                 return response()->json(CustomHandler::tokenExpired());
             } elseif( !$jwt->get("status") ){
+                if(Riwayat::getByToken($token))
+                    return response()->json(CustomHandler::tokenExpired());
+
                 return response()->json(CustomHandler::unauthorized());
             }
 
