@@ -4,12 +4,15 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Carbon\Carbon;
 
 class RiwayatLogin extends Model
 {
 	protected $table = "riwayat_login";
 	protected $guarded = [];
+	protected $casts = ["expired_at" => "datetime"];
 	protected $hidden = ["token", "user_id", "user_type"];
+	protected $appends = ["active", "active_until"];
 
 	/**
 	 * relasi morph untuk user
@@ -22,6 +25,12 @@ class RiwayatLogin extends Model
 		return $this->morphTo();
 	}
 
+	function getActiveAttribute(){
+		return $this->expired_at->gte(Carbon::now());
+	}
+	function getActiveUntilAttribute(){
+		return $this->expired_at->diffForHumans();
+	}
 
 	/**
 	 * scope success untuk mengambil riwayat login dengan status

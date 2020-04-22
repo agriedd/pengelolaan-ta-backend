@@ -118,6 +118,7 @@ class Authenticate
 
         //inject request
         $request->user = $user;
+        $request->_token = $token;
         
         return $data;
     }

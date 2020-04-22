@@ -85,9 +85,16 @@ class RiwayatLoginRepository extends Repository
 		return $user->riwayat()
 			->active()
 			->success()
-			->when($tokenExcept, function($query){
+			->when($tokenExcept, function($query) use($tokenExcept){
 				$query->where("token", "<>", $tokenExcept);
 			})
+			->update([ "expired_at" => Carbon::now() ]);
+	}
+	public static function logout($id, $user){
+		return $user->riwayat()
+			->active()
+			->success()
+			->find($id)
 			->update([ "expired_at" => Carbon::now() ]);
 	}
 }

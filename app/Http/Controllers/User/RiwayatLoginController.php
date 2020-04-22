@@ -17,4 +17,13 @@ class RiwayatLoginController extends Controller
 	function self(Request $request){
 		return parent::res(true, Riwayat::getByUser( $request, Auth::user() ));
 	}
+
+	function logoutAll(Request $request){
+		$result = Riwayat::logoutAll(Auth::user(), $request->_token);
+		return parent::res(!!$result, Auth::user() );
+	}
+	function logout(Request $request, $id){
+		$result = Riwayat::logout($id, Auth::user());
+		return parent::res(!!$result, Auth::user() );
+	}
 }

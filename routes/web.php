@@ -57,7 +57,9 @@ Route::group([ 'prefix'	=> 'admin' ], function($router){
 Route::group(['prefix' => 'riwayat'], function($router){
 	
 	Route::group(['prefix' => "self"], function(){
-		Route::get('/self', 'User\RiwayatLoginController@self');
+		Route::get('/', 'User\RiwayatLoginController@self');
+		Route::get('/logout', 'User\RiwayatLoginController@logoutAll');
+		Route::get('/logout/{id}', 'User\RiwayatLoginController@logout');
 	});
 
 	Route::get('/', 'SuperAdmin\RiwayatLoginController@getAll');
