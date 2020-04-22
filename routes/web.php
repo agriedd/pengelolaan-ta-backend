@@ -16,8 +16,8 @@
 // use App\Model\Admin as Admin;
 // use Closure;
 
-// $router->get('/', function () use ($router) {
-//     return $router->app->version();
+// Route::get('/', function () use ($router) {
+//     return Route::app->version();
 // });
 
 
@@ -33,14 +33,20 @@ Route::get('/self', "UserController@self");
  * @uses AdminController only SuperAdmin
  * 
  */
-Route::group([ 'prefix'	=> '/admin' ], function($router){
-	$router->get('/', 'AdminController@getAll');
-	$router->post('/', 'SuperAdmin\AdminController@insert');
-	$router->post('/dosen/{id}', 'SuperAdmin\AdminController@insertByDosen');
-	$router->get('/{id}', 'AdminController@get');
-	$router->delete('/{id}', 'SuperAdmin\AdminController@delete');
-	$router->put('/', 'Admin\AdminController@update');
-	$router->put('/{id}', 'Admin\AdminController@update');
+Route::group([ 'prefix'	=> 'admin' ], function($router){
+
+	Route::group([ 'prefix' => "{id}" ], function($router){
+		Route::get('/', 'AdminController@get');
+		Route::delete('/', 'SuperAdmin\AdminController@delete');
+		Route::put('/', 'Admin\AdminController@update');
+		Route::get('/password/reset', 'SuperAdmin\AdminController@resetPassword');
+	});
+
+	Route::get('/', 'AdminController@getAll');
+	Route::post('/', 'SuperAdmin\AdminController@insert');
+	Route::post('/dosen/{id}', 'SuperAdmin\AdminController@insertByDosen');
+	Route::put('/', 'Admin\AdminController@update');
+
 });
 
 
@@ -48,31 +54,31 @@ Route::group([ 'prefix'	=> '/admin' ], function($router){
  * @api /riwayat
  * 
  */
-Route::group(['prefix' => '/riwayat'], function($router){
-	$router->get('/', 'SuperAdmin\RiwayatLoginController@getAll');
-	$router->get('/self', 'User\RiwayatLoginController@self');
+Route::group(['prefix' => 'riwayat'], function($router){
+	Route::get('/', 'SuperAdmin\RiwayatLoginController@getAll');
+	Route::get('/self', 'User\RiwayatLoginController@self');
 });
 
 
-Route::group(['prefix' => '/jurusan'], function($router){
+Route::group(['prefix' => 'jurusan'], function($router){
 
-	$router->get('/', 'JurusanController@getAll');
-	$router->post('/', 'SuperAdmin\JurusanController@insert');
-	$router->put('/{id: [0-9]+}', 'Admin\JurusanController@update');
-	$router->put('/{kd_jurusan:  }', 'Admin\JurusanController@updateByKdJurusan');
-	$router->get('/{id: [0-9]+}', 'JurusanController@get');
-	$router->get('/{kd_jurusan: [a-zA-Z0-9\-\_]{4,} }', 'JurusanController@getByKdJurusan');
-	$router->delete('/{id: [0-9]+}', 'SuperAdmin\JurusanController@delete');
+	Route::get('/', 'JurusanController@getAll');
+	Route::post('/', 'SuperAdmin\JurusanController@insert');
+	Route::put('/{id: [0-9]+}', 'Admin\JurusanController@update');
+	Route::put('/{kd_jurusan:  }', 'Admin\JurusanController@updateByKdJurusan');
+	Route::get('/{id: [0-9]+}', 'JurusanController@get');
+	Route::get('/{kd_jurusan: [a-zA-Z0-9\-\_]{4,} }', 'JurusanController@getByKdJurusan');
+	Route::delete('/{id: [0-9]+}', 'SuperAdmin\JurusanController@delete');
 
 });
 
 
-Route::group(['prefix' => '/dosen'], function($router){
+Route::group(['prefix' => 'dosen'], function($router){
 
-	$router->get('/', 'DosenController@getAll');
-	$router->post('/', 'Admin\DosenController@insert');
-	$router->get('/{id: [0-9]{18} }', 'DosenController@getByNip');
-	$router->get('/{id: [0-9]+}', 'DosenController@get');
+	Route::get('/', 'DosenController@getAll');
+	Route::post('/', 'Admin\DosenController@insert');
+	Route::get('/{id: [0-9]{18} }', 'DosenController@getByNip');
+	Route::get('/{id: [0-9]+}', 'DosenController@get');
 
 });
 
@@ -82,12 +88,12 @@ Route::group(['prefix' => '/dosen'], function($router){
  * @todo router by kd_prodi
  * 
  */
-Route::group(['prefix' => '/prodi'], function($router){
+Route::group(['prefix' => 'prodi'], function($router){
 
-	$router->get('/', 'ProdiController@getAll');
-	$router->get('/{id: [0-9]+}', 'ProdiController@get');
-	$router->put('/{id: [0-9]+}', 'Admin\ProdiController@update');
-	$router->post('/', 'SuperAdmin\ProdiController@insert');
-	$router->delete('/{id: [0-9]+}', 'SuperAdmin\ProdiController@delete');
+	Route::get('/', 'ProdiController@getAll');
+	Route::get('/{id: [0-9]+}', 'ProdiController@get');
+	Route::put('/{id: [0-9]+}', 'Admin\ProdiController@update');
+	Route::post('/', 'SuperAdmin\ProdiController@insert');
+	Route::delete('/{id: [0-9]+}', 'SuperAdmin\ProdiController@delete');
 
 });

@@ -63,7 +63,7 @@ class AdminController extends Controller
         if($admin)
             InformasiAdmin::insert($info, $admin);
 
-    	return parent::res($admin ? true : false, Admin::get($admin->id));
+    	return parent::res(!!$admin, Admin::get($admin->id));
     }
 
 
@@ -98,7 +98,7 @@ class AdminController extends Controller
         if($admin)
             Dosen::get($id)->admin()->create( $info );
 
-        return parent::res($admin ? true : false, $admin);
+        return parent::res(!!$admin, $admin);
     }
 
     /**
@@ -301,6 +301,20 @@ class AdminController extends Controller
 
     	$result = Admin::delete($id);
 
-    	return parent::res($result ? true : false, [ "undo" => false ]);
+    	return parent::res(!!$result, [ "undo" => false ]);
+    }
+
+    function resetPassword(Request $request, $id){
+
+        $request->request->add(["id" => $id]);
+
+        $validator = self::updateValidate( $request );
+
+        if($validator->fails())
+            return parent::res(false, null, null, $validator->errors());
+
+        $result = Admin::resetPassword($id);
+
+        return parent::res(!!$result, Admin::get($id));
     }
 }

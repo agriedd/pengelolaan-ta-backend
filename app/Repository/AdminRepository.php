@@ -156,4 +156,16 @@ class AdminRepository extends Repository
 		return self::model()->find($id)
 			->delete();
 	}
+
+	/**
+	 * reset password admin jurusan
+	 * 
+	 * @param int id
+	 * 
+	 * @return int
+	 */
+	public static function resetPassword($id){
+		$result = self::update(collect( [ "password" => env("DEFAULT_PASSWORD", "password") ] ), $id);
+		return $result;
+	}
 }
