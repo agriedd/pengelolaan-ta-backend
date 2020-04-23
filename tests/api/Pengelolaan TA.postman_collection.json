@@ -1295,6 +1295,40 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "delete dosen",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "DELETE",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}dosen/1",
+									"host": [
+										"{{HOST}}dosen"
+									],
+									"path": [
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"auth": {
@@ -1516,25 +1550,25 @@
 	],
 	"variable": [
 		{
-			"id": "cea2ce6f-8c50-4259-9056-01aac47ca1ce",
+			"id": "b7093734-12d3-4a1c-8172-a04d07f482c3",
 			"key": "HOST",
 			"value": "http://localhost:8000/",
 			"type": "string"
 		},
 		{
-			"id": "dbf572c4-f1c0-44fc-b6e5-57f5d37cbbb8",
+			"id": "c18d7b8d-59ce-465f-8cd5-36e3b423b7fc",
 			"key": "token",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjEsImxldiI6MCwidGltIjoxNTg3MzY0NzE4fQ.7JM54gvYmg2J8nfTZcBDfHJi-1ovUxhIOFv-qW5WDus",
 			"type": "string"
 		},
 		{
-			"id": "33a09f69-49e3-40f0-b8ef-d59f55a0975d",
+			"id": "8a6d221d-f000-4efb-bfd8-7876d226ef07",
 			"key": "nip",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "0790692a-cd15-43b9-91dc-6efe3b6cf153",
+			"id": "e26ce885-3a0a-466c-8e9b-154733492297",
 			"key": "token_admin",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjIsImxldiI6MCwidGltIjoxNTg3NTEyMDU1fQ.Am0-z3o6PSSUQOc9NRc8UA3zYz0aLHGG5aXyhuWHyr8",
 			"type": "string"

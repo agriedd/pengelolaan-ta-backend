@@ -94,4 +94,10 @@ class DosenRepository extends Repository
 
 		return self::model()->find($id)->update($collection->all());
 	}
+	static function remove($id){
+		return self::delete($id);
+	}
+	static function delete($id){
+		return self::model()->find($id)->delete();
+	}
 }

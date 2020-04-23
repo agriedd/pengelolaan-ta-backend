@@ -92,6 +92,7 @@ Route::group(['prefix' => 'dosen'], function($router){
 	Route::group(['prefix' => '{id: [0-9]+}'], function(){
 		Route::get('/', 'DosenController@get');
 		Route::put('/', 'Admin\DosenController@update');
+		Route::delete('/', 'Admin\DosenController@delete');
 	});
 
 	Route::get('/{username}', 'User\DosenController@getByUsername');

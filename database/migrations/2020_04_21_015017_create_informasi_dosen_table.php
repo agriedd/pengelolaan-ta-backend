@@ -19,7 +19,7 @@ class CreateInformasiDosenTable extends Migration
             //relationship
             $table->unsignedBigInteger("id_dosen");
             $table->foreign("id_dosen")->references("id")->on("dosen")
-                ->onCreate("cascade")
+                ->onDelete("cascade")
                 ->onUpdate("cascade");
 
             //commons

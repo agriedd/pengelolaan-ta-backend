@@ -216,4 +216,8 @@ class DosenController extends Controller
     static function getInfoDosenProps($validator){
     	return collect($validator->getData())->only([ "nama", "prefix", "sufiks", "nip", "jenis_kelamin", "tempat_lahir", "tanggal_lahir", "alamat", "foto", "email", "telepon", "media_sosial", "biodata" ]);
     }
+    public function delete(Request $request, $id){
+        $result = Dosen::delete($id);
+        return parent::res(!!$result, [ "undo" => false ]);
+    }
 }
