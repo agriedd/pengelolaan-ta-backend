@@ -6,6 +6,7 @@ use App\Model\{
 	Dosen,
 };
 use Carbon\Carbon;
+use Hash;
 
 class DosenRepository extends Repository
 {
@@ -23,7 +24,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function get($id){
-		return self::model()->info()->find($id);
+		return self::model()->info()->with(["prodi", "prodi.jurusan"])->find($id);
 	}
 
 	/**
@@ -38,7 +39,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getByNip($nip){
-		return self::model()->info()->where("informasi.nip", $nip)->first(); 
+		return self::model()->info()->with(["prodi", "prodi.jurusan"])->where("informasi.nip", $nip)->first(); 
 	}
 
 	/**
@@ -50,7 +51,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getByUsername($username){
-		return self::model()->info()->where("username", $username)->first(); 
+		return self::model()->info()->with(["prodi", "prodi.jurusan"])->where("username", $username)->first(); 
 	}
 
 	/**
@@ -64,7 +65,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getAll($request){
-		return self::model()->info()->paginate($request->has("limit") ? $request->limit : 10);
+		return self::model()->info()->with(["prodi", "prodi.jurusan"])->paginate($request->has("limit") ? $request->limit : 10);
 	}
 
 
@@ -79,7 +80,18 @@ class DosenRepository extends Repository
 	static function insert($collection){
 		$collection
 			->put("created_at", Carbon::now())
-			->put("updated_at", Carbon::now());
+			->put("updated_at", Carbon::now())
+			->put("password", Hash::make( $collection->get("password") ));
+
 		return self::model()->insertGetId($collection->all());
+	}
+	static function update($collection, $id){
+		
+		$collection->put("updated_at", Carbon::now());
+
+		if($collection->has("password"))
+			$collection->put("password", Hash::make( $collection->get("password") ));
+
+		return self::model()->find($id)->update($collection->all());
 	}
 }

@@ -87,9 +87,12 @@ Route::group(['prefix' => 'dosen'], function($router){
 
 	Route::get('/', 'DosenController@getAll');
 	Route::post('/', 'Admin\DosenController@insert');
-	Route::get('/{id: [0-9]{18} }', 'DosenController@getByNip');
-	Route::get('/{id: [0-9]+}', 'DosenController@get');
+	Route::get('/{nip: [0-9]{18} }', 'DosenController@getByNip');
 
+	Route::group(['prefix' => '{id: [0-9]+}'], function(){
+		Route::get('/', 'DosenController@get');
+		Route::put('/', 'Admin\DosenController@update');
+	});
 });
 
 

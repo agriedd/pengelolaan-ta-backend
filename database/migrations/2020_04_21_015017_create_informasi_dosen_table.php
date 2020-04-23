@@ -32,7 +32,7 @@ class CreateInformasiDosenTable extends Migration
             $table->enum("jenis_kelamin", [ "L", "P" ])->nullable();
             $table->string("tempat_lahir")->nullable();
             $table->date("tanggal_lahir")->nullable();
-            $table->date("alamat")->nullable();
+            $table->string("alamat")->nullable();
             $table->enum("agama", ["1","2","3","4","5"])->nullable();
 
             $table->string("email")->nullable();

@@ -22,6 +22,15 @@ class Dosen extends Model
 	function informasi(){
 		return $this->hasMany(InformasiDosen::class, "id_dosen", "id");
 	}
+	/**
+	 * Relasi belongsTo dengan Prodi
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
+	function prodi(){
+		return $this->belongsTo(Prodi::class, "id_prodi", "id");
+	}
 
 	function scopeInfo($query){
 		$subquery = InformasiDosenRepo::getLatestDosenQuery();
