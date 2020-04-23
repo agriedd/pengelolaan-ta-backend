@@ -6,7 +6,8 @@ use App\Model\{
 	InformasiDosen,
 	Dosen,
 };
-use Corbon\Carbon;
+use Carbon\Carbon;
+use DB;
 
 class InformasiDosenRepository extends Repository
 {
@@ -28,5 +29,9 @@ class InformasiDosenRepository extends Repository
     		->put("created_at", Carbon::now() )
     		->put("updated_at", Carbon::now() );
     	return $dosen->informasi()->create( $collection->all() );
+    }
+
+    public static function getLatestDosenQuery(){
+        return self::model()->groupBy(DB::raw("id_dosen DESC"));;
     }
 }

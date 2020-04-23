@@ -23,7 +23,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function get($id){
-		return self::model()->find($id);
+		return self::model()->info()->find($id);
 	}
 
 	/**
@@ -38,7 +38,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getByNip($nip){
-		return self::model()->where("informasi.nip", $nip)->first(); 
+		return self::model()->info()->where("informasi.nip", $nip)->first(); 
 	}
 
 	/**
@@ -50,7 +50,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getByUsername($username){
-		return self::model()->where("username", $username)->first(); 
+		return self::model()->info()->where("username", $username)->first(); 
 	}
 
 	/**
@@ -64,7 +64,7 @@ class DosenRepository extends Repository
 	 * 
 	 */
 	static function getAll($request){
-		return self::model()->paginate($request->has("limit") ? $request->limit : 10);
+		return self::model()->info()->paginate($request->has("limit") ? $request->limit : 10);
 	}
 
 

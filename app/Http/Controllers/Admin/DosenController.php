@@ -111,7 +111,7 @@ class DosenController extends Controller
     }
 
     static function getDosenProps($validator){
-    	return collect($validator->getData())->only([ "username", "password" ]);
+    	return collect($validator->getData())->only([ "username", "password", "id_prodi" ]);
     }
     static function getInfoDosenProps($validator){
     	return collect($validator->getData())->only([ "nama", "prefix", "sufiks", "nip", "jenis_kelamin", "tempat_lahir", "tanggal_lahir", "alamat", "foto", "email", "telepon", "media_sosial", "biodata" ]);
