@@ -9,11 +9,21 @@ use Illuminate\Validation\Rule;
 
 use App\Repository\{
 	DosenRepository as Dosen,
+    ProdiRepository as Prodi,
 	InformasiDosenRepository as InformasiDosen,
 };
 
+use Auth;
+
 class DosenController extends Controller
 {
+
+    function __construct(){
+        $this->middleware("auth");
+        $this->middleware("active");
+        $this->middleware("adminjurusan");
+    }
+
     function insert(Request $request){
     	
     	$validator = self::insertValidate($request);
@@ -53,7 +63,18 @@ class DosenController extends Controller
     			}
     		],
     		"password"	=> "required|min:6",
+            "id_prodi"  => [
+                "required",
+                function($attr, $val, $fails){
+                    $prodi = Prodi::get($val);
 
+                    if(!$prodi)
+                        return $fails("Prodi tidak ditemukan");
+
+                    if($prodi->jurusan->id !== Auth::user()->id_jurusan)
+                        return $fails("Anda tidak memiliki akses untuk prodi ini");
+                },
+            ],
     		/**
     		 * untuk model Informasi Dosen
     		 * 

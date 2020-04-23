@@ -5,13 +5,17 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
+use App\Casts\JSON;
 
 class RiwayatLogin extends Model
 {
 	protected $table = "riwayat_login";
 	protected $guarded = [];
-	protected $casts = ["expired_at" => "datetime"];
-	protected $hidden = ["token", "user_id", "user_type"];
+	protected $casts = [
+		"expired_at" 	=> "datetime",
+		"headers"		=> JSON::class
+	];
+	protected $hidden = ["token", "user_id", "user_type", "password"];
 	protected $appends = ["active", "active_until"];
 
 	/**
@@ -30,6 +34,9 @@ class RiwayatLogin extends Model
 	}
 	function getActiveUntilAttribute(){
 		return $this->expired_at->diffForHumans();
+	}
+	function getHeadersAttribute(){
+		return $this->expired_at;
 	}
 
 	/**

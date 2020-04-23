@@ -1,0 +1,1425 @@
+{
+	"info": {
+		"_postman_id": "b716df13-5922-45be-89b9-ef811b220b03",
+		"name": "Pengelolaan TA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "super admin",
+					"item": [
+						{
+							"name": "Insert admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "adminmesin",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Admin PNK Jurusan Mesin",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/admin",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"admin"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "AgriEdd",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "New Name",
+											"type": "text"
+										},
+										{
+											"key": "nip",
+											"value": "131237137173713325",
+											"type": "text"
+										},
+										{
+											"key": "level",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}admin/6",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert admin by dosen",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "agriedd",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "passowrd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}admin/dosen/1",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										"dosen",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset password admin",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}admin/3/password/reset",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										"3",
+										"password",
+										"reset"
+									],
+									"query": [
+										{
+											"key": "_method",
+											"value": "post",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "disable admin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6c437e74-ddfe-4f25-b7dd-08a043ec6bb2",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f11222f5-e964-4abe-8740-237c0a6a3861",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "Update admin Self",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "AgriEdd",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Name Changed Again",
+											"type": "text"
+										},
+										{
+											"key": "nip",
+											"value": "131237137173713325",
+											"type": "text"
+										},
+										{
+											"key": "level",
+											"value": "0",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}admin/1",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "687484cd-3cf1-4c34-9521-a11143953e29",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "83df66be-9e0c-4f5d-8e5d-63234231e257",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "all",
+					"item": [
+						{
+							"name": "Get admin",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-api-key",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjEsImxldiI6MH0.jtwM0not1oS9_4_2rJXOt0i5ck5N1W4-DRBQxqZjBsg",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "api_token",
+											"value": "e27e993a6ca311954341b068302b31adfa63453a",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}admin/1",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All admin",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}admin/",
+									"host": [
+										"{{HOST}}admin"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Riwayat login",
+			"item": [
+				{
+					"name": "super admin",
+					"item": [
+						{
+							"name": "getAll",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}riwayat",
+									"host": [
+										"{{HOST}}riwayat"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset riwayat admin",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}riwayat/admin/2/clear",
+									"host": [
+										"{{HOST}}riwayat"
+									],
+									"path": [
+										"admin",
+										"2",
+										"clear"
+									],
+									"query": [
+										{
+											"key": "Acc",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get riwayat login self",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}riwayat/self",
+									"host": [
+										"{{HOST}}riwayat"
+									],
+									"path": [
+										"self"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset riwayat login all self",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}riwayat/self/logout",
+									"host": [
+										"{{HOST}}riwayat"
+									],
+									"path": [
+										"self",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset riwayat login self",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}riwayat/self/logout/14",
+									"host": [
+										"{{HOST}}riwayat"
+									],
+									"path": [
+										"self",
+										"logout",
+										"14"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b1c1e5d1-f103-4e96-9bc7-cbfc7de0fe05",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1eff41f8-23ce-491a-b948-b9ad646cb33a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "get riwayat dosen jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/riwayat/",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"riwayat",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get riwayat mahasiswa jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset riwayat dosen jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset riwayat mahasiswa jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Jurusan",
+			"item": [
+				{
+					"name": "all",
+					"item": [
+						{
+							"name": "get jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/jurusan/ELEKTRO",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"jurusan",
+										"ELEKTRO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all jurusan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}jurusan",
+									"host": [
+										"{{HOST}}jurusan"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "super-admin",
+					"item": [
+						{
+							"name": "insert jurusan",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "kd_jurusan",
+											"value": "@ELEKTRO",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Jurusan Elektro",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "jurusan.elektro@pnk.ac.id",
+											"type": "text"
+										},
+										{
+											"key": "website",
+											"value": "https://elektro.pnk.ac.id",
+											"type": "text"
+										},
+										{
+											"key": "keterangan",
+											"value": "Jurusan teknik elektro politeknik negeri kupang",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/jurusan",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"jurusan"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete jurusan",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "DELETE",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}jurusan/3",
+									"host": [
+										"{{HOST}}jurusan"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update jurusan",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Jurusan Teknik Elektro",
+											"type": "text"
+										},
+										{
+											"key": "kd_jurusan",
+											"value": "ELEkTRO",
+											"type": "text"
+										},
+										{
+											"key": "keterangan",
+											"value": "hello dunia",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "elektropnk@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "media_sosial",
+											"value": "{ \"foo\": \"bar\" }",
+											"type": "text"
+										},
+										{
+											"key": "website",
+											"value": "http://elektro.pnk.ac.id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/jurusan/ELEKTRO",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"jurusan",
+										"ELEKTRO"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "prodi",
+			"item": [
+				{
+					"name": "all",
+					"item": [
+						{
+							"name": "get all prodi",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}prodi",
+									"host": [
+										"{{HOST}}prodi"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get prodi",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}prodi/1",
+									"host": [
+										"{{HOST}}prodi"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "super admin",
+					"item": [
+						{
+							"name": "insert prodi",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "kd_prodi",
+											"value": "LISTRIKD3",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "nama",
+											"value": "Teknik Listrik D3",
+											"type": "text"
+										},
+										{
+											"key": "id_jurusan",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "id_jurusan",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "listrikd3pnk@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}prodi",
+									"host": [
+										"{{HOST}}prodi"
+									],
+									"query": [
+										{
+											"key": "kd_prodi",
+											"value": "LISTRIKD3",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update prodi",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Teknik Listrik D4",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "tekniklistrikd4@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "id_jurusan",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}prodi/2",
+									"host": [
+										"{{HOST}}prodi"
+									],
+									"path": [
+										"2"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete prodi",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "delete",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}prodi/3",
+									"host": [
+										"{{HOST}}prodi"
+									],
+									"path": [
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "update prodi",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Teknik Listrik D4",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "tekniklistrikd4@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "id_jurusan",
+											"value": "4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}prodi/2",
+									"host": [
+										"{{HOST}}prodi"
+									],
+									"path": [
+										"2"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "dosen",
+			"item": [
+				{
+					"name": "all",
+					"item": [
+						{
+							"name": "get dosen",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/dosen/1",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"dosen",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all dosen",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}dosen",
+									"host": [
+										"{{HOST}}dosen"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get dosen by nim",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}dosen/{{nip}}",
+									"host": [
+										"{{HOST}}dosen"
+									],
+									"path": [
+										"{{nip}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "insert dosen",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "dosen123",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Dosen Pratama",
+											"type": "text"
+										},
+										{
+											"key": "nip",
+											"value": "{{nip}}",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}dosen",
+									"host": [
+										"{{HOST}}dosen"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get self",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}self",
+							"host": [
+								"{{HOST}}self"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_admin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0cf0e76d-385e-430d-b652-a77f21c373ea",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "129f0062-0c28-419e-b357-ef3b86040334",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "adminpnk",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{HOST}}login",
+					"host": [
+						"{{HOST}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{HOST}}edd?token=edd",
+					"host": [
+						"{{HOST}}edd"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "edd"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b4144a60-f564-4e6c-a84f-5a0040383135",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "339023d8-a496-4761-9695-72708e500136",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fff58340-97ae-43f2-8a1b-a0ed7a4c9b47",
+			"key": "HOST",
+			"value": "http://localhost:8000/",
+			"type": "string"
+		},
+		{
+			"id": "e91d11a6-0515-4615-bc54-c085076ffb88",
+			"key": "token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjEsImxldiI6MCwidGltIjoxNTg3MzY0NzE4fQ.7JM54gvYmg2J8nfTZcBDfHJi-1ovUxhIOFv-qW5WDus",
+			"type": "string"
+		},
+		{
+			"id": "ecd54c24-38cb-41f3-bf4a-542b5f61fd68",
+			"key": "nip",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "69686914-12ad-4f86-943b-8cc1d59c7997",
+			"key": "token_admin",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjIsImxldiI6MCwidGltIjoxNTg3NTEyMDU1fQ.Am0-z3o6PSSUQOc9NRc8UA3zYz0aLHGG5aXyhuWHyr8",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

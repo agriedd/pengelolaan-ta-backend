@@ -93,6 +93,8 @@ $app->routeMiddleware([
     'active' => App\Http\Middleware\ActiveUserMiddleware::class,
     'super' => App\Http\Middleware\SuperAdminMiddleware::class,
     'admin' => App\Http\Middleware\AdminMiddleware::class,
+    'onlyadmin' => App\Http\Middleware\OnlyAdminMiddleware::class,
+    'adminjurusan' => App\Http\Middleware\OnlyAdminMiddleware::class,
 ]);
 
 

@@ -5,6 +5,7 @@ use App\Model\Admin;
 use Illuminate\Support\Facades\{
 	Hash,
 	Cache,
+	DB,
 };
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -94,18 +95,20 @@ class AdminRepository extends Repository
 	 * @method insert
 	 * menambahkan sebuah data admin baru
 	 * 
-	 * @param request
+	 * @param collection
 	 * 
 	 * @return Model\Admin
 	 * 
 	 */
-	public static function insert($request){
-		$request = Collection::make($request->all());
-		$request->put( "password", Hash::make($request->get("password")))
+	public static function insert($collection){
+		$collection->put( "password", Hash::make($collection->get("password")))
 			->put( "created_at", Carbon::now() )
 			->put( "updated_at", Carbon::now() );
 
-		return self::model()->insertGetId( $request->all() );
+		if($collection->has("id_jurusan") && empty($collection->get("id_jurusan")))
+			$collection->put("id_jurusan", DB::raw("NULL"));
+
+		return self::model()->insertGetId( $collection->all() );
 	}
 
 
@@ -113,23 +116,25 @@ class AdminRepository extends Repository
 	 * @method update
 	 * mengubah sebuah data admin
 	 * 
-	 * @param request
+	 * @param collection
 	 * @param id
 	 * 
 	 * @return Boolean
 	 * 
 	 */
-	public static function update($request, $id){
+	public static function update($collection, $id){
 
 		Cache::pull("admin_{$id}");
 
-		$request = Collection::make($request->all());
-		$request->put( "updated_at", Carbon::now() );
-		
-		if($request->has("password"))
-			$request->put( "password", Hash::make($request->get("password")));
+		$collection->put( "updated_at", Carbon::now() );
 
-		return self::model()->find($id)->update( $request->all() );
+		if($collection->has("password"))
+			$collection->put( "password", Hash::make($collection->get("password")));
+
+		if($collection->has("id_jurusan") && empty($collection->get("id_jurusan")))
+			$collection->put("id_jurusan", DB::raw("NULL"));
+
+		return self::model()->find($id)->update( $collection->all() );
 	}
 
 

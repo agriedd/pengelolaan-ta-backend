@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repository\{
 	AdminRepository as Admin,
+    JurusanRepository as Jurusan,
 	InformasiAdminRepository as InformasiAdmin,
 };
 use Validator;
 use Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 
 
 /**
@@ -132,7 +134,14 @@ class AdminController extends Controller
                         }
                     ],
                 "password" => "required|min:6",
-
+                "id_jurusan"    =>
+                    [
+                        "nullable",
+                        function($attr, $val, $fail){
+                            if(!Jurusan::get($val))
+                                $fail("Jurusan tidak ditemukan");
+                        }
+                    ],
 
                 /**
                  * property yang diperbolehkan untuk menambah informasi admin
@@ -180,7 +189,7 @@ class AdminController extends Controller
      * 
      */
     static function getAdminProps($validator){
-        return collect($validator->getData())->only([ "username", "password" ]);
+        return collect($validator->getData())->only([ "username", "password", "id_jurusan" ]);
     }
 
     /**
@@ -228,20 +237,18 @@ class AdminController extends Controller
     	$validator = self::updateValidate($request);
 
     	if($validator->fails())
-    		return $this->res($validator->fails(), null, null, $validator->errors());
+    		return $this->res(false, null, null, $validator->errors());
 
-    	$data = Collection::make($validator->getData());
-
-    	$data_admin 			= Collection::make($data->only(["username", "password"]));
-    	$data_informasi_admin 	= Collection::make($data->only([ "nama", "nip", "username", "level", "status" ]));
+    	$data = self::getAdminProps($validator);
+        $info = self::getInfoAdminProps($validator);
 
     	/**
     	 * @var result_admin 				mengupdate data admin($id)
     	 * @var result_informasi_admin		menambahkan data informasi_admin($id) 
     	 * 
     	 */
-    	$result_admin 			= Admin::update($data_admin, $id);
-    	$result_informasi_admin = InformasiAdmin::insert($data_informasi_admin, Admin::get($id));
+    	$result_admin 			= Admin::update($data, $id);
+    	$result_informasi_admin = InformasiAdmin::insert($info, Admin::get($id));
 
     	$result = $result_admin && $result_informasi_admin;
 
@@ -254,8 +261,9 @@ class AdminController extends Controller
     		[
 
     			/**
-    			 * @property admin \App\Model\Admin
+    			 * admin \App\Model\Admin
     			 * 
+                 * 
     			 */
     			"username" 	=> [
     				"min:6",
@@ -267,6 +275,15 @@ class AdminController extends Controller
     				}
     			],
     			"password" 	=> "min:6",
+                
+                "id_jurusan" => [
+                    "nullable",
+                    function($attr, $val, $fail){
+                        if(!Jurusan::get($val))
+                            $fail("Jurusan tidak ditemukan");
+                    }
+                ],
+
     			"id"		=> [
     				"required",
     				function($attr, $val, $fail){
