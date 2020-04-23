@@ -9,7 +9,7 @@ class UserController extends Controller{
 
 	function __construct()
 	{
-		$this->middleware("auth");
+		$this->middleware("auth:admin");
 	}
 
 	public function self(Request $request){

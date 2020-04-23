@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'api'),
+        'guard' => env('AUTH_GUARD', 'admin'),
     ],
 
     /*
@@ -36,6 +36,14 @@ return [
 
     'guards' => [
         'api' => ['driver' => 'api'],
+        'admin' => [
+            'driver'    => 'token',
+            'provider'  => 'admin',
+        ],
+        'dosen'  => [
+            'drive'     => 'token',
+            'provider'  => 'dosen',
+        ]
     ],
 
     /*
@@ -56,7 +64,14 @@ return [
     */
 
     'providers' => [
-        //
+        'admin' => [
+            'driver'    => 'eloquent',
+            'model'     => App\Model\Admin::class,
+        ],
+        'dosen' => [
+            'driver'    => 'eloquent',
+            'model'     => App\Model\Dosen::class,
+        ],
     ],
 
     /*
