@@ -99,33 +99,41 @@
 										{
 											"key": "password",
 											"value": "password",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "nama",
 											"value": "New Name",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "nip",
 											"value": "131237137173713325",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "level",
 											"value": "1",
 											"type": "text",
 											"disabled": true
+										},
+										{
+											"key": "id_jurusan",
+											"value": "4",
+											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{HOST}}admin/6",
+									"raw": "{{HOST}}admin/2",
 									"host": [
 										"{{HOST}}admin"
 									],
 									"path": [
-										"6"
+										"2"
 									]
 								}
 							},
@@ -1160,7 +1168,7 @@
 							"response": []
 						},
 						{
-							"name": "get dosen by nim",
+							"name": "get dosen by nip",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1218,10 +1226,9 @@
 											"type": "text"
 										},
 										{
-											"key": "",
-											"value": "",
-											"type": "text",
-											"disabled": true
+											"key": "id_prodi",
+											"value": "1",
+											"type": "text"
 										}
 									]
 								},
@@ -1229,6 +1236,118 @@
 									"raw": "{{HOST}}dosen",
 									"host": [
 										"{{HOST}}dosen"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update dosen",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										},
+										{
+											"key": "tempat_lahir",
+											"value": "kupang",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "pratamadwi",
+											"type": "text"
+										},
+										{
+											"key": "nama",
+											"value": "Pratama Dwi",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}dosen/1",
+									"host": [
+										"{{HOST}}dosen"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b03041e4-3faa-47db-b439-c9b8fb96397f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0c08fab-0aa4-4d0b-8102-75850e26e4bc",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get dosen by username",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/dosen/pratamadwi",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"dosen",
+										"pratamadwi"
 									]
 								}
 							},
@@ -1397,25 +1516,25 @@
 	],
 	"variable": [
 		{
-			"id": "fff58340-97ae-43f2-8a1b-a0ed7a4c9b47",
+			"id": "cea2ce6f-8c50-4259-9056-01aac47ca1ce",
 			"key": "HOST",
 			"value": "http://localhost:8000/",
 			"type": "string"
 		},
 		{
-			"id": "e91d11a6-0515-4615-bc54-c085076ffb88",
+			"id": "dbf572c4-f1c0-44fc-b6e5-57f5d37cbbb8",
 			"key": "token",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjEsImxldiI6MCwidGltIjoxNTg3MzY0NzE4fQ.7JM54gvYmg2J8nfTZcBDfHJi-1ovUxhIOFv-qW5WDus",
 			"type": "string"
 		},
 		{
-			"id": "ecd54c24-38cb-41f3-bf4a-542b5f61fd68",
+			"id": "33a09f69-49e3-40f0-b8ef-d59f55a0975d",
 			"key": "nip",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "69686914-12ad-4f86-943b-8cc1d59c7997",
+			"id": "0790692a-cd15-43b9-91dc-6efe3b6cf153",
 			"key": "token_admin",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXAiOiJhZG1pbiIsIm9yaSI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwIiwiaWQiOjIsImxldiI6MCwidGltIjoxNTg3NTEyMDU1fQ.Am0-z3o6PSSUQOc9NRc8UA3zYz0aLHGG5aXyhuWHyr8",
 			"type": "string"

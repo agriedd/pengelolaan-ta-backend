@@ -93,6 +93,8 @@ Route::group(['prefix' => 'dosen'], function($router){
 		Route::get('/', 'DosenController@get');
 		Route::put('/', 'Admin\DosenController@update');
 	});
+
+	Route::get('/{username}', 'User\DosenController@getByUsername');
 });
 
 
