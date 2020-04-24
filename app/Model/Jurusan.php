@@ -32,6 +32,10 @@ class Jurusan extends Model
 		return $this->hasMany(Prodi::class, "id_jurusan", "id");
 	}
 
+	public function dosen(){
+		return $this->hasManyThrough(Dosen::class, Prodi::class, "id_jurusan", "id_prodi", "id", "id");
+	}
+
 	/**
 	 * relasi has Many dengan Admin
 	 * 

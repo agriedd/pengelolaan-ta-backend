@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
      //        );
      //    });
 
-        $admin = \App\Model\Admin::create([ "username" => "agri", "password" => app("hash")->make("password") ]);
+        $admin = \App\Model\Admin::create([ "username" => "agriedd", "password" => app("hash")->make("password") ]);
         $admin->informasi()->create( [ "level" => 1 ] );
 
         $this->call(JurusanSeeder::class);

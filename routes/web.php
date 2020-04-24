@@ -75,7 +75,10 @@ Route::group(['prefix' => 'jurusan'], function($router){
 	Route::group(['prefix' => '{id: [0-9]+}'], function(){
 		Route::get('/', 'JurusanController@get');
 		Route::put('/', 'Admin\JurusanController@update');
+
 		Route::get('/prodi', "ProdiController@getAllByJurusan");
+		Route::get('/dosen', "DosenController@getAllByJurusan");
+		
 		Route::delete('/', 'SuperAdmin\JurusanController@delete');
 	});
 	Route::group(['prefix' => '{kd_jurusan: [a-zA-Z0-9\-\_]{4,} }'], function(){

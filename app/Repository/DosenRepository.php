@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Model\{
 	Dosen,
+	Jurusan,
+	Prodi,
 };
 use Carbon\Carbon;
 use Hash;
@@ -66,6 +68,18 @@ class DosenRepository extends Repository
 	 */
 	static function getAll($request){
 		return self::model()->info()->with(["prodi", "prodi.jurusan"])->paginate($request->has("limit") ? $request->limit : 10);
+	}
+
+	static function getAllByJurusan($request, Jurusan $jurusan){
+		return $jurusan->dosen()
+			->with(["prodi", "prodi.jurusan"])
+			->paginate($request->has("limit") ? $request->limit : 10);
+	}
+
+	static function getAllByProdi($request, Prodi $prodi){
+		return $prodi->dosen()
+			->with(["prodi", "prodi.jurusan"])
+			->paginate($request->has("limit") ? $request->limit : 10);
 	}
 
 

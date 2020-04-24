@@ -38,7 +38,7 @@ class Prodi extends Model
 	 * @return QueryBuilder
 	 * 
 	 */
-	function dosen($prodi){
+	function dosen(){
 		return $this->hasMany(Dosen::class, "id_prodi", "id");
 	}
 

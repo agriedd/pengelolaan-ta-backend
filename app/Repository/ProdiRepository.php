@@ -41,7 +41,7 @@ class ProdiRepository extends Repository
 	}
 	static function getAllByJurusan($request, Jurusan $jurusan)
 	{
-		return self::model()
+		return $jurusan->prodi()
 			->info()
 			->with(["jurusan"])
 			->where("id_jurusan", $jurusan->id)

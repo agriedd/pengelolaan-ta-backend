@@ -5,8 +5,10 @@ use Carbon\Carbon;
 use App\Model\{
 	Jurusan,
 	Prodi,
-	Admin,
+	Dosen,
+    Admin,
 	InformasiAdmin,
+    InformasiDosen,
 };
 use Illuminate\Database\Eloquent\Factory;
 
@@ -43,7 +45,15 @@ class JurusanSeeder extends Seeder
 
     	foreach ($list_jurusan as $key => $jurusan) {
     		factory(Jurusan::class, 1)->create($jurusan->all())->each(function($jurusan){
-                $jurusan->prodi()->saveMany(factory(Prodi::class, 3)->make());
+                $jurusan->prodi()->saveMany(factory(Prodi::class, 3)->make())->each(function($prodi){
+                    $prodi->dosen()->saveMany(
+                        factory(Dosen::class, 2)->make()
+                    )->each(function($dosen){
+                        $dosen->informasi()->saveMany(
+                            factory( InformasiDosen::class, 1 )->make()
+                        );
+                    });
+                });
                 $jurusan->admin()->saveMany(
                         factory(Admin::class, 1)->make()
                     )->each(function($admin){
