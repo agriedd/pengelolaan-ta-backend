@@ -20,7 +20,7 @@ $factory->define(Prodi::class, function (Faker $faker) {
 
         "nama"			=> $faker->name,
         "kd_prodi"		=> $faker->username,
-        "keterangan"	=> $faker->sentences(3),
+        "keterangan"	=> $faker->sentences(3, true),
         "created_at"	=> Carbon::now(),
         "updated_at"	=> Carbon::now(),
     ];

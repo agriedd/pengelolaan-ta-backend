@@ -42,7 +42,16 @@ class JurusanSeeder extends Seeder
     	];
 
     	foreach ($list_jurusan as $key => $jurusan) {
-    		factory(Jurusan::class, 1)->create($jurusan->all());
+    		factory(Jurusan::class, 1)->create($jurusan->all())->each(function($jurusan){
+                $jurusan->prodi()->saveMany(factory(Prodi::class, 3)->make());
+                $jurusan->admin()->saveMany(
+                        factory(Admin::class, 1)->make()
+                    )->each(function($admin){
+                        $admin->informasi()->saveMany(
+                            factory(InformasiAdmin::class, 1)->make()
+                        );
+                    });
+            });
     	}
     }
 }
