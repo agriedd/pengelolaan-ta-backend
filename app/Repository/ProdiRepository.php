@@ -39,6 +39,14 @@ class ProdiRepository extends Repository
 	{
 		return self::model()->info()->with(["jurusan"])->paginate($request->has("limit") ? $request->limit : 10);
 	}
+	static function getAllByJurusan($request, Jurusan $jurusan)
+	{
+		return self::model()
+			->info()
+			->with(["jurusan"])
+			->where("id_jurusan", $jurusan->id)
+			->paginate($request->has("limit") ? $request->limit : 10);
+	}
 
 	static function remove($id){
 		return self::delete($id);

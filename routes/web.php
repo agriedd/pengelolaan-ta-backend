@@ -72,14 +72,19 @@ Route::group(['prefix' => 'riwayat'], function($router){
 
 Route::group(['prefix' => 'jurusan'], function($router){
 
+	Route::group(['prefix' => '{id: [0-9]+}'], function(){
+		Route::get('/', 'JurusanController@get');
+		Route::put('/', 'Admin\JurusanController@update');
+		Route::get('/prodi', "ProdiController@getAllByJurusan");
+		Route::delete('/', 'SuperAdmin\JurusanController@delete');
+	});
+	Route::group(['prefix' => '{kd_jurusan: [a-zA-Z0-9\-\_]{4,} }'], function(){
+		Route::put('/', 'Admin\JurusanController@updateByKdJurusan');
+		Route::get('/', 'JurusanController@getByKdJurusan');
+	});
+
 	Route::get('/', 'JurusanController@getAll');
 	Route::post('/', 'SuperAdmin\JurusanController@insert');
-	Route::put('/{id: [0-9]+}', 'Admin\JurusanController@update');
-	Route::put('/{kd_jurusan:  }', 'Admin\JurusanController@updateByKdJurusan');
-	Route::get('/{id: [0-9]+}', 'JurusanController@get');
-	Route::get('/{kd_jurusan: [a-zA-Z0-9\-\_]{4,} }', 'JurusanController@getByKdJurusan');
-	Route::delete('/{id: [0-9]+}', 'SuperAdmin\JurusanController@delete');
-
 });
 
 
