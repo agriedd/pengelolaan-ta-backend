@@ -12,10 +12,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
-    	factory(\App\Model\Admin::class, 1)->create()->each(function($admin){
-            $admin->informasi()->saveMany(
-                factory(\App\Model\InformasiAdmin::class, 1)->make()
-            );
-        });
+    	// factory(\App\Model\Admin::class, 1)->create([
+     //        'username'  => "agriedd",
+     //    ])->each(function($admin){
+     //        $admin->informasi()->saveMany(
+     //            factory(\App\Model\InformasiAdmin::class, 1)->make()
+     //        );
+     //    });
+
+        $admin = \App\Model\Admin::create([ "username" => "agri", "password" => app("hash")->make("password") ]);
+        $admin->informasi()->create( [ "level" => 1 ] );
+
+        $this->call(JurusanSeeder::class);
     }
 }

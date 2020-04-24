@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(InformasiAdmin::class, function (Faker $faker) {
     return [
-        "level" 	=> "1",
+        "level" 	=> "0",
         "status"	=> "1"
     ];
 });

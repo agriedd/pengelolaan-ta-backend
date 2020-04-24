@@ -33,6 +33,16 @@ class Jurusan extends Model
 	}
 
 	/**
+	 * relasi has Many dengan Admin
+	 * 
+	 * @return QueryBuilder
+	 * 
+	 */
+	public function admin(){
+		return $this->hasMany(Admin::class, "id_jurusan", "id");
+	}
+
+	/**
 	 * scope untuk melakukan join dengan tabel informasiJurusan
 	 * 
 	 * @param QueryBuilder query

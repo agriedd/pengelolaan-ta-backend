@@ -32,7 +32,7 @@ class Admin extends Model
      */
     public function informasi()
     {
-        return $this->hasMany(InformasiAdmin::class, "id_admin");
+        return $this->hasMany(InformasiAdmin::class, "id_admin", "id");
     }
 
     /**

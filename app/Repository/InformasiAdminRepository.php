@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\{
 	Cache,
 };
 
+/**
+ * 
+ * ⚠ status dan level admin mungkin bermasalah
+ * 
+ * @todo update method update agar mengambil data status dan level terakhir
+ * @todo bila request yang dikirim kosong
+ * @todo atau pindahkan level dan status di model admin
+ * 
+ */
+
 class InformasiAdminRepository extends Repository
 {
 	/**
