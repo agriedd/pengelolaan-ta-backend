@@ -4,6 +4,14 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\{
+    User,
+    Repository\AdminRepository as Admin,
+    Repository\RiwayatLoginRepository as Riwayat,
+
+    Exceptions\CustomHandler,
+    Generator\JWT,
+};
 
 class Authenticate
 {
@@ -33,16 +41,38 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if( $guard === "admin" ){
+    public function handle($request, Closure $next, $guard = null){
 
-            //admin
+        if( $token = self::getToken($request) ){
 
+            $data = self::checkToken($request);
+
+            if($data->get("expired"))
+                return response()->json(CustomHandler::tokenExpired());
+            elseif(!$data->get("status"))
+                return response()->json(CustomHandler::unauthorized());
+
+            if($guard === "admin" && User::ADMIN === $data->get("data")->get("typ")){
+                Admin::login($this->auth, $request, $token, $data);
+            }
+            if($guard === "dosen"){
+
+            }
+            if($guard === "mahasiswa" || $guard === null){
+
+            }
+
+            if($this->auth->user())
+                return $next($request);
         }
-        return $next($request);
+        return response()->json(CustomHandler::unauthorized());
     }
 
+    public static function getToken($request){
+        return $request->BearerToken() ?? $request->_token;
+    }
 
-
+    public static function checkToken($request){
+        return JWT::decode(self::getToken($request));
+    }
 }

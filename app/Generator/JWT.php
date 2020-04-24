@@ -66,7 +66,7 @@ class JWT {
 		}
 
 		return collect([
-			"data" 		=> $decoded,
+			"data" 		=> collect($decoded),
 			"status" 	=> $status,
 			"message"	=> $message,
 			"expired"	=> $expired,

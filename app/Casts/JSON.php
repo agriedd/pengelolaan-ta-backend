@@ -22,6 +22,8 @@ class JSON implements CastsAttributes
 
     static function filter($object)
     {
+        if(is_string($object))
+            $object = json_decode($object);
         $data = collect($object);
         return $data->except("authorization");
     }

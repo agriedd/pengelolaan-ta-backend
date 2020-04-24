@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\{
 	Hash,
 	Cache,
 	DB,
+	Auth,
 };
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -172,5 +173,29 @@ class AdminRepository extends Repository
 	public static function resetPassword($id){
 		$result = self::update(collect( [ "password" => env("DEFAULT_PASSWORD", "password") ] ), $id);
 		return $result;
+	}
+
+	public static function login($auth, $request, $token, $data){
+        $admin 		= self::getWithLastAuth($data->get("data")->get("id"), $token);
+		$expired 	= !$admin->riwayatTerakhir;
+
+		if($admin && !$expired){
+            /**
+             * jika akun ada dan token terakhir sama dengan token yang dikirim dan token
+             * belum kadaluarsa
+             * 
+             * user dapat menggunakan token yang pernah terdaftar sebelum waktu expired 1 minggu
+             * setiap kali token digunakan maka waktu expired akan diperpanjang 1 minggu seterusnya
+             * setiap kali user melakukan login token baru akan diberi guna mencatat aktivitas
+             * atau riwayat login user
+             * 
+             */
+			$auth->guard("admin")->setUser($admin);
+
+            /**
+             * @var update waktu kadaluarsa token +1 minggu
+             */
+            RiwayatLoginRepository::updateExpiredDate( $admin->riwayatTerakhir );
+		}
 	}
 }

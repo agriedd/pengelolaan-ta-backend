@@ -13,9 +13,9 @@ class RiwayatLoginController extends Controller
 {
 	
 	function __construct(){
-		$this->middleware('auth');
-		$this->middleware('active');
-		$this->middleware('super');
+		$this->middleware('auth:admin');
+		// $this->middleware('active');
+		// $this->middleware('super');
 	}
 
 	/**

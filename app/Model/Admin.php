@@ -10,7 +10,7 @@ use Laravel\Lumen\Auth\Authorizable;
 
 use App\Repository\InformasiAdminRepository;
 
-class Admin extends Model
+class Admin extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
 

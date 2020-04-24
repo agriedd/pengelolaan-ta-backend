@@ -21,8 +21,8 @@
 // });
 
 
-
-Route::post('/login', "LoginController@loginPost");
+// Route::post('/login', "LoginController@loginPost");
+Route::get('/login', "LoginController@loginPost");
 
 Route::get('/self', "UserController@self");
 

@@ -60,13 +60,11 @@ class RiwayatLoginRepository extends Repository
 
 			->put("expired_at", self::expiredDate());
 
-		if($status){
+		if($status)
 			return $user->riwayat()->create( $collection->only([
 				"username", "ip_address", "headers", "status", "created_at", "updated_at", "token", "expired_at"
 			])->all() );
-		}
 		else
-
 			return self::model()->insert( $collection->only([
 				"username", "ip_address", "headers", "status", "created_at", "updated_at"
 			])->all() );

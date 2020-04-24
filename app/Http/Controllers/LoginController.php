@@ -46,7 +46,7 @@ class LoginController extends Controller
 
     	if(!$user) {
             /*
-             | jika user dengan usernam yang dikirim tidak ditemukan
+             | jika user dengan username yang dikirim tidak ditemukan
              | 
              */
     		Riwayat::insert( false, $request, $collection );
@@ -97,18 +97,15 @@ class LoginController extends Controller
      * 
      */
     public function dataValidate(Request $request){
+        $rule = [
+            "username"  => "required|min:4",
+            "password"  => "required|min:4"
+        ];
 
-    	$validator = Validator::make(
-    		$request->all(),
-    		[
-    			"username"	=> "required|min:4",
-    			"password"	=> "required|min:4"
-    		],
-    		[
-    			"required"	=> "Kolom :attribute tidak boleh kosong",
-    		]
-    	);
+        $message = [
+            "required"  => "Kolom :attribute tidak boleh kosong",
+        ];
 
-    	return $validator;
+    	return Validator::make($request->all(), $rule, $message);
     }
 }
