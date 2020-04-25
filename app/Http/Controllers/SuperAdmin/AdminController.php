@@ -10,7 +10,7 @@ use App\Repository\{
 	InformasiAdminRepository as InformasiAdmin,
 };
 use Validator;
-use Auth;
+use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 
@@ -290,7 +290,7 @@ class AdminController extends Controller
     					$admin = Admin::get($val);
     					if(!$admin)
     						return $fail("Admin dengan id {$val} tidak ditemukan");
-                        if($admin->id != Auth::user()->id && $admin->level)
+                        if($admin->id != User::get()->id && $admin->level)
                             return $fail("Terjadi sebuah kesalahan");
     				}
     			],

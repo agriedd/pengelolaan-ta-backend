@@ -12,33 +12,38 @@ class JWT {
 
     public static function make($data, $time = null){
     	if(isset($time))
-			FJWT::$leeway = $time ?? self::$default_time; // $leeway in seconds
-
+    		/*
+    		 | mengatur waktu expired pada token berdasarkan
+    		 | detik
+    		 |
+    		 */
+			FJWT::$leeway = $time ?? self::$default_time;
 
     	$key = env("JWT_KEY", self::$default_key);
-
+    	/*
+    	 | menggunakan key yang ada pada .env atau $default_key
+    	 |
+    	 */
 		$token = FJWT::encode($data, $key);
 
-
-
-    	return collect( [
+    	return collect([
     		"status" 	=> $token ? true : false,
     		"token" 	=> $token
-    	] );
+    	]);
     }
 
-    public static function payload($type, $request, $id, $level = 0){
+    public static function payload($type, $request, $user){
     	return collect([
 		    "typ" 	=> $type,
 		    "ori" 	=> $request,
-		    "id" 	=> $id,
-		    "lev" 	=> $level,
+		    "id" 	=> $user->id,
+		    "lev" 	=> $user->level ? 1 : 0,
 		    "tim"	=> \Carbon\Carbon::now()->getTimestamp()
     	]);
     }
 
     public static function decode($token){
-    	
+ 
     	$key = env("JWT_KEY", self::$default_key);
 
     	$decoded = null;
@@ -47,22 +52,30 @@ class JWT {
     	$expired = false;
 
 		try {
-
+			/*
+			 | jika berhasil
+			 |
+			 */
 			$decoded 	= FJWT::decode($token, $key, array('HS256'));
 			$status		= true;
 			$message 	= "✔";
 		
 		} catch (ExpiredException $e) {
-
+			/*
+			 | jika gagal akibat token expired
+			 |
+			 */
 			$message 	= $e->getMessage();
 			$status		= false;
 			$expired 	= true;
 
 		} catch (\Exception $e) {
-
+			/*
+			 | jika gagal mendecode token
+			 |
+			 */
 			$message 	= $e->getMessage();
 			$status		= false;
-
 		}
 
 		return collect([

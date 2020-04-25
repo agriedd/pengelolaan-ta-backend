@@ -24,6 +24,7 @@ class ActiveUserMiddleware
      * Create a new middleware instance.
      *
      * @param  \Illuminate\Contracts\Auth\Factory  $auth
+     * 
      * @return void
      */
     public function __construct(Auth $auth)
@@ -37,15 +38,22 @@ class ActiveUserMiddleware
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @param  string|null  $guard
+     * 
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        /**
-         * middleware untuk mengecek user berstatus aktif
-         * 
+    public function handle($request, Closure $next, $guard = null){
+        /*
+         | middleware untuk mengecek user berstatus aktif
+         | 
          */
-        if(!$request->user || $request->user->status == 0){
+        $user = User::get($request);
+
+        if(!$user || $user->status === 0 || $user->status !== null){
+            /*
+             | jika user dengan kolom status sama dengan 1 (satu) saja
+             | atau user tanpa kolom status saja yang dapat melanjutkan
+             |
+             */
             return response()->json(CustomHandler::unauthorized());
         }
         return $next($request);

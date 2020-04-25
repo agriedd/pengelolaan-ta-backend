@@ -41,7 +41,7 @@ return [
             'provider'  => 'admin',
         ],
         'dosen'  => [
-            'drive'     => 'token',
+            'driver'     => 'token',
             'provider'  => 'dosen',
         ]
     ],

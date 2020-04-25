@@ -11,19 +11,20 @@ use App\Repository\{
 	AdminRepository as Admin,
 	InformasiAdminRepository as InformasiAdmin,
 };
+use App\User;
 use Validator;
 use Auth;
 
 
 class AdminController extends Controller
 {
-    /**
-     * 
-     */
     function __construct(){
+        /*
+         | hanya dapat diakes oleh admin yang aktif saja
+         | 
+         */
         $this->middleware("auth:admin");
-        // $this->middleware("active");
-        // $this->middleware("admin");
+        $this->middleware("active");
     }
 
     /**
@@ -35,8 +36,10 @@ class AdminController extends Controller
      * 
      */
     static function getAdminProps($validator){
-        return collect($validator->getData())->only([ "username", "password" ]);
+        return collect($validator->getData())
+            ->only([ "username", "password" ]);
     }
+
 
     /**
      * mengambil data hasil validasi untuk informasi Admin
@@ -44,52 +47,79 @@ class AdminController extends Controller
      * @param Validator validator
      * 
      * @return Collection
-     * 
      */
     static function getInfoAdminProps($validator){
-        return collect($validator->getData())->only([ "nama", "nip" ]);
+        return collect($validator->getData())
+            ->only([ "nama", "nip" ]);
     }
 
-    static function updateValidate(Request $request)
-    {
+
+    /**
+     * validasi untuk method update
+     * 
+     * @param Request $request
+     * 
+     * @return Validator
+     */
+    static function updateValidate(Request $request){
+
+        $rule = [
+            /**
+             * admin \App\Model\Admin
+             * 
+             * @property username
+             * @property password
+             * @property id
+             * 
+             */
+            "username"  => [
+                "min:6",
+                function($attr, $val, $fail) use($request){
+                    /*
+                     | mengecek apakah username sudah digunakan admin lain,
+                     | selain admin ini.
+                     |
+                     */
+                    if(Admin::getByUsernameExcept($val, $request->id))
+                        $fail("{$attr} `{$val}` sudah digunakan.");
+                    
+                }
+            ],
+            "password"  => "min:6",
+            "id"        => [
+                function($attr, $val, $fails){
+                    $admin = Admin::get($val);
+                    /*
+                     | mengecek apakah admin ada dan
+                     | admin yang diupdate adalah data admin
+                     | sendiri
+                     |
+                     */
+                    if(!$admin || $admin->id !== User::get()->id)
+                        $fails("Anda tidak mempunyai akses ini.");
+                }
+            ],
+
+
+            /**
+             * \App\Model\InformasiAdmin
+             * 
+             * @property nama
+             * @property nip
+             */
+            "nama"      => "min:4",
+            "nip"       => "min:18|max:18"
+        ];
+
+        $messages = [
+            "min"       => "Panjang :attribute setidaknya :min karakter",
+            "max"       => "Panjang :attribute tidak boleh lebih dari :max karakter",
+        ];
+
         return Validator::make(
             $request->all(),
-            [
-
-                /**
-                 * @property admin \App\Model\Admin
-                 * 
-                 */
-                "username"  => [
-                    "min:6",
-                    function($attr, $val, $fail) use($request){
-
-                        if(Admin::getByUsernameExcept($val, $request->id))
-                            $fail("{$attr} `{$val}` sudah digunakan.");
-                        
-                    }
-                ],
-                "password"  => "min:6",
-                "id"    => [
-                    function($attr, $val, $fails){
-                        $admin = Admin::get($val);
-                        if(!$admin || $admin->id !== Auth::user()->id)
-                            $fails("Anda tidak mempunyai akses ini.");
-                    }
-                ],
-
-
-                /**
-                 * @property informasi admin \App\Model\InformasiAdmin
-                 * 
-                 */
-                "nama"      => "min:4",
-                "nip"       => "min:18|max:18"
-            ],
-            [
-                "min"       => "Panjang :attribute setidaknya :min karakter",
-                "max"       => "Panjang :attribute tidak boleh lebih dari :max karakter",
-            ]
+            $rule,
+            $messages,
         );
     }
 
@@ -122,9 +152,22 @@ class AdminController extends Controller
     function update(Request $request, $id = null){
 
         if($id == null)
-            $id = Auth::user()->id;
+            /*
+             | jika id kosong artinya admin mengedit datanya
+             | sendiri.
+             |
+             */
+            $id = User::get()->id;
 
-        if(Auth::user()->level)
+        if(User::get()->level)
+            /*
+             | jika yang sedang login ternyata super admin maka
+             | melakukan update melalui
+             | App\Http\Controllers\SuperAdmin\AdminController
+             | agar mendapat akses penuh seperti perubahan status
+             | hingga level
+             |
+             */
             return self::updateSuperAdmin($request, $id);
 
         $request->request->add([ "id" => $id ]);
@@ -141,7 +184,6 @@ class AdminController extends Controller
     	/**
     	 * @var result_admin 				mengupdate data admin($id)
     	 * @var result_informasi_admin		menambahkan data informasi_admin($id) 
-    	 * 
     	 */
     	$result_admin 			= Admin::update($data, $id);
     	$result_informasi_admin = InformasiAdmin::insert($info, Admin::get($id));
@@ -151,6 +193,14 @@ class AdminController extends Controller
 		return parent::res($result, Admin::get($id));
     }
 
+    /**
+     * mengupdate admin menggunakan controller SuperAdmin
+     * 
+     * @param Request $request
+     * @param integer $id
+     * 
+     * @return Response
+     */
     static function updateSuperAdmin(Request $request, $id = null){
         $updateController = new SuperAdminController;
         return $updateController->update($request, $id);

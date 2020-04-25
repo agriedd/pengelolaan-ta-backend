@@ -13,17 +13,28 @@ use App\Repository\{
 	InformasiDosenRepository as InformasiDosen,
 };
 
-use Auth;
+use App\User;
 
 class DosenController extends Controller
 {
 
     function __construct(){
+        /*
+         | kontroller hanya dapat diakses admin jurusan saja
+         |
+         */
         $this->middleware("auth");
         $this->middleware("active");
         $this->middleware("adminjurusan");
     }
 
+    /**
+     * menambah data dosen oleh admin jurusan
+     * 
+     * @param Request $request
+     * 
+     * @return JSON response
+     */
     function insert(Request $request){
     	
     	$validator = self::insertValidate($request);
@@ -40,11 +51,19 @@ class DosenController extends Controller
     	if($dosen)
     		InformasiDosen::insert($info, $dosen);
 
-    	return parent::res($result ? true : false, Dosen::get($dosen->id));
+    	return parent::res(!!$result, Dosen::get($dosen->id));
     }
 
+
+    /**
+     * validasi untuk insert method
+     * 
+     * @param Request $request
+     * 
+     * @return Validator
+     */
     static function insertValidate(Request $request){
-    	return Validator::make($request->all(), [
+    	$rules = [
     		/**
     		 * untuk model Dosen
     		 * 
@@ -52,13 +71,16 @@ class DosenController extends Controller
     		 * @property password
     		 * 
     		 * @todo pengecekan format password
-    		 * 
     		 */
     		"username"	=> [
     			"required",
     			"min:6",
     			function($attr, $val, $fail){
     				if(Dosen::getByUsername($val))
+                        /*
+                         | jika username sudah terdaftar
+                         |
+                         */
     					$fail("Username sudah terdaftar");
     			}
     		],
@@ -67,11 +89,18 @@ class DosenController extends Controller
                 "required",
                 function($attr, $val, $fails){
                     $prodi = Prodi::get($val);
-
                     if(!$prodi)
+                        /*
+                         | jika prodi tidak ditemukan
+                         |
+                         */
                         return $fails("Prodi tidak ditemukan");
-
-                    if($prodi->jurusan->id !== Auth::user()->id_jurusan)
+                    if($prodi->jurusan->id !== User::get()->id_jurusan)
+                        /*
+                         | jika prodi yang dipilih tidak sama dengan
+                         | jurusan admin jurusan
+                         |
+                         */
                         return $fails("Anda tidak memiliki akses untuk prodi ini");
                 },
             ],
@@ -101,16 +130,30 @@ class DosenController extends Controller
     		"tanggal_lahir" => "date",
     		"email"			=> "email",
     		"media_sosial"	=> "json",
-    	],[
+    	];
+        $messages = [
     		"required" 	=> "Kolom :attribute tidak boleh kosong",
     		"min" 		=> "Kolom :attribute tidak boleh kurang dari :min karakter",
     		"max" 		=> "Kolom :attribute tidak boleh melebihi :max karakter",
     		"email" 	=> "Kolom email tidak valid",
     		"date"		=> "Kolom :attribute harus memiliki format tanggal yang valid"
-    	]);
+    	];
+        return Validator::make(
+            $request->all(),
+            $rules,
+            $messages
+        );
     }
 
 
+    /**
+     * method update dosen
+     * 
+     * @param Request $request
+     * @param integer $id
+     * 
+     * @return Json response
+     */
     function update(Request $request, $id){
         
         $request->request->add(["id" => $id]);
@@ -132,6 +175,13 @@ class DosenController extends Controller
         return parent::res(!!$result, Dosen::get($dosen->id));
     }
 
+
+    /**
+     * validasi untuk update method
+     * 
+     * @param Request $request
+     * @return Validator
+     */
     static function updateValidate(Request $request){
         return Validator::make($request->all(), [
             /**
@@ -161,6 +211,11 @@ class DosenController extends Controller
                     if(!$dosen)
                         return $fail("Tidak menemukan dosen dengan id {$val}");
                     if($dosen->prodi->jurusan->id !== Auth::user()->id_jurusan)
+                        /*
+                         | jika jurusan - prodi dosen yang diupdate tidak sama dengan
+                         | jurusan admin jurusan
+                         |
+                         */
                         return $fail("Tidak menemukan dosen dengan id {$val}");
                 },
             ],
@@ -171,7 +226,12 @@ class DosenController extends Controller
                     if(!$prodi)
                         return $fails("Prodi tidak ditemukan");
 
-                    if($prodi->jurusan->id !== Auth::user()->id_jurusan)
+                    if($prodi->jurusan->id !== User::get()->id_jurusan)
+                        /*
+                         | jika prodi tidak tidak sama dengan dengan jurusan
+                         | admin jurusan
+                         |
+                         */
                         return $fails("Anda tidak memiliki akses untuk prodi ini");
                 },
             ],
@@ -210,13 +270,71 @@ class DosenController extends Controller
         ]);
     }
 
+    /**
+     * mengambil data hasil validasi untuk di store
+     * ke model Dosen
+     * 
+     * @param Validator $validator
+     * 
+     * @return Collection
+     */
     static function getDosenProps($validator){
-    	return collect($validator->getData())->only([ "username", "password", "id_prodi" ]);
+    	return collect($validator->getData())
+            ->only([ "username", "password", "id_prodi" ]);
     }
+
+    /**
+     * mengambil data hasil validasi untuk di store
+     * ke model InformasiDosen
+     * 
+     * @param Validator $validator
+     * 
+     * @return Collection
+     */
     static function getInfoDosenProps($validator){
-    	return collect($validator->getData())->only([ "nama", "prefix", "sufiks", "nip", "jenis_kelamin", "tempat_lahir", "tanggal_lahir", "alamat", "foto", "email", "telepon", "media_sosial", "biodata" ]);
+    	return collect($validator->getData())
+            ->only([
+                "nama", 
+                "prefix", 
+                "sufiks", 
+                "nip", 
+                "jenis_kelamin", 
+                "tempat_lahir", 
+                "tanggal_lahir", 
+                "alamat", 
+                "foto", 
+                "email", 
+                "telepon", 
+                "media_sosial", 
+                "biodata"
+            ]);
     }
+
+    /**
+     * untuk menghapus dosen jurusan tertentu
+     * 
+     * @param Request $request
+     * 
+     * @return JSON response
+     */
     public function delete(Request $request, $id){
+        $request->request->add(["id" => $id]);
+
+        $validator = Validator::make($request->all(), [
+            "id" => [
+                "required",
+                function($attribute, $value, $fail){
+                    $dosen = Dosen::get($value);
+                    if(!$dosen)
+                        return $fail("Dosen tidak ditemukan");
+                    if($dosen->prodi->jurusan->id !== User::get()->id_jurusan)
+                        return $fail("Anda tidak dapat menghapus data ini");
+                }
+            ]
+        ]);
+        if($validator->fail())
+            return parent::res(false, null, null, $validator->errors());
+
         $result = Dosen::delete($id);
         return parent::res(!!$result, [ "undo" => false ]);
     }

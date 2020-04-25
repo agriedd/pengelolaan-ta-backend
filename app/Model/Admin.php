@@ -28,10 +28,8 @@ class Admin extends Model implements AuthenticatableContract, AuthorizableContra
      * relasi has Many dengan Informasi Admin
      * 
      * @return QueryBuilder
-     * 
      */
-    public function informasi()
-    {
+    public function informasi(){
         return $this->hasMany(InformasiAdmin::class, "id_admin", "id");
     }
 
@@ -39,10 +37,8 @@ class Admin extends Model implements AuthenticatableContract, AuthorizableContra
      * relasi morph 1 - many dengan user
      * 
      * @return Query
-     * 
      */
-    public function riwayat()
-    {
+    public function riwayat(){
         return $this->morphMany(RiwayatLogin::class, 'user');
     }
 
@@ -74,11 +70,14 @@ class Admin extends Model implements AuthenticatableContract, AuthorizableContra
      * @param query
      * 
      * @return QueryBuilder
-     * 
      */
     public function scopeInfo($query)
     {
     	$informasi_admin = InformasiAdminRepository::getLatestAdminQuery();
+        /*
+         | sub query teradapat pada \App\Repository\InformasiAdminRepository
+         |
+         */
     	return $query
     		->select([ "informasi.*", "admin.*" ])
     		->leftJoinSub($informasi_admin, "informasi", function($join){

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Auth;
+use App\User;
 use App\Http\Controllers\{
 	Controller,
 	SuperAdmin\ProdiController as SuperAdminProdiController,
@@ -23,7 +23,7 @@ class ProdiController extends Controller
 		// $this->middleware("admin");
 	}
     public function update(Request $request, $id){
-    	if(Auth::user()->level)
+    	if(User::get()->level)
     		return self::updateSuperAdmin($request, $id);
 
     	$request->request->add([ "id" => $id ]);
@@ -67,7 +67,7 @@ class ProdiController extends Controller
     			},
     			function($attribute, $value, $fail){
     				$prodi = Prodi::get($value);
-    				if($prodi && ( $prodi->jurusan->id !== Auth::user()->jurusan_id && !Auth::user()->level))
+    				if($prodi && ( $prodi->jurusan->id !== User::get()->jurusan_id && !User::get()->level))
     					return $fail("😑 Anda tidak dapat mengubah data prodi ini.");
     			}
     		],

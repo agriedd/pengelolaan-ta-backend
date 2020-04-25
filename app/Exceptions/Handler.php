@@ -51,13 +51,33 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if($exception instanceof HttpException && $request->wantsJSON())
-            return CustomHandler::http($request, $exception, parent::render($request, $exception));
+            /*
+             | jika kesalahan http
+             |
+             */
+            return CustomHandler::http(
+                $request,
+                $exception,
+                parent::render($request, $exception)
+            );
         elseif($exception instanceof QueryException)
-            //tidak jalan
+            /*
+             | jika terjadi kesalahan query database
+             |
+             */
             if(!env("APP_DEBUG"))
+                /*
+                 | kustom query handler response
+                 |
+                 */
                 return CustomHandler::query($request, $exception);
         elseif($request->wantsJSON())
             if(!env("APP_DEBUG"))
+                /*
+                 | jika kesalahan tidak diketahui atau
+                 | masalah keberadaan file
+                 |
+                 */
                 return response()->json(CustomHandler::format("terjadi sebuah kesalahan", $exception), 500);
         return parent::render($request, $exception);
     }

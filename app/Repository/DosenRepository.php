@@ -114,4 +114,38 @@ class DosenRepository extends Repository
 	static function delete($id){
 		return self::model()->find($id)->delete();
 	}
+
+
+	public static function getWithLastAuth($id, $token = null){
+		return self::model()->info()->with([
+				"riwayatTerakhir" => function($query) use ($token){
+					$query->where("token", $token);
+				}
+			])->find($id);
+	}
+
+	public static function login($auth, $request, $token, $data){
+        $dosen 		= self::getWithLastAuth($data->get("data")->get("id"), $token);
+		$expired 	= !$dosen->riwayatTerakhir;
+
+		if($dosen && !$expired){
+            /**
+             * jika akun ada dan token terakhir sama dengan token yang dikirim dan token
+             * belum kadaluarsa
+             * 
+             * user dapat menggunakan token yang pernah terdaftar sebelum waktu expired 1 minggu
+             * setiap kali token digunakan maka waktu expired akan diperpanjang 1 minggu seterusnya
+             * setiap kali user melakukan login token baru akan diberi guna mencatat aktivitas
+             * atau riwayat login user
+             * 
+             */
+			$auth->guard("dosen")->setUser($dosen);
+			$request->guard = "dosen";
+
+            /**
+             * @var update waktu kadaluarsa token +1 minggu
+             */
+            RiwayatLoginRepository::updateExpiredDate( $dosen->riwayatTerakhir );
+		}
+	}
 }

@@ -11,7 +11,7 @@ use App\Repository\{
 use App\Http\Controllers\{
 	SuperAdmin\JurusanController as SuperAdmin,
 };
-use Auth;
+use App\User;
 
 class JurusanController extends Controller
 {
@@ -24,7 +24,7 @@ class JurusanController extends Controller
 	}
 
 	public function update(Request $request, $id){
-		if(Auth::user()->level)
+		if(User::get()->level)
 			return $this->updateAsSuperAdmin($request, $id);
 
 		$validator = self::updateValidate($request, $id);

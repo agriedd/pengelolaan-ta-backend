@@ -23,8 +23,17 @@ class JSON implements CastsAttributes
     static function filter($object)
     {
         if(is_string($object))
+            /*
+             | jika objek masih belom di decode menjadi
+             | JSON objek, coba men-decode sekali lagi
+             |
+             */
             $object = json_decode($object);
         $data = collect($object);
+        /*
+         | tidak menyertakan authorization karena mengandung token
+         |
+         */
         return $data->except("authorization");
     }
     /**

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Factory as Auth;
 use App\{
     User,
     Repository\AdminRepository as Admin,
+    Repository\DosenRepository as Dosen,
     Repository\RiwayatLoginRepository as Riwayat,
 
     Exceptions\CustomHandler,
@@ -52,17 +53,19 @@ class Authenticate
             elseif(!$data->get("status"))
                 return response()->json(CustomHandler::unauthorized());
 
-            if($guard === "admin" && User::ADMIN === $data->get("data")->get("typ")){
+            $encoded = $data->get("data");
+
+            if($guard === User::ADMIN || User::ADMIN === $encoded->get("typ")){
                 Admin::login($this->auth, $request, $token, $data);
             }
-            if($guard === "dosen"){
+            if($guard === User::DOSEN || User::DOSEN === $encoded->get("typ")){
+                Dosen::login($this->auth, $request, $token, $data);
+            }
+            if($guard === User::DOSEN || User::DOSEN === $encoded->get("typ") || $guard === null){
 
             }
-            if($guard === "mahasiswa" || $guard === null){
-
-            }
-
-            if($this->auth->user())
+            
+            if($this->user())
                 return $next($request);
         }
         return response()->json(CustomHandler::unauthorized());
@@ -74,5 +77,11 @@ class Authenticate
 
     public static function checkToken($request){
         return JWT::decode(self::getToken($request));
+    }
+    public static function user(){
+        return 
+            app("auth")->guard("admin") ||
+            app("auth")->guard("dosen") ||
+            app("auth")->guard("mahasiswa");
     }
 }

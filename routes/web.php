@@ -17,7 +17,7 @@
 // use Closure;
 
 // Route::get('/', function () use ($router) {
-//     return Route::app->version();
+//     return Route::app()->version();
 // });
 
 
@@ -26,11 +26,8 @@ Route::get('/login', "LoginController@loginPost");
 
 Route::get('/self', "UserController@self");
 
-
 /**
  * @api /admin
- * 
- * @uses AdminController only SuperAdmin
  * 
  */
 Route::group([ 'prefix'	=> 'admin' ], function($router){

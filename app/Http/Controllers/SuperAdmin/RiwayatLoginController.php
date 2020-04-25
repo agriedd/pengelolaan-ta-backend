@@ -13,9 +13,14 @@ class RiwayatLoginController extends Controller
 {
 	
 	function __construct(){
+		/*
+		 | Riwayat Login Controller milik super admin
+		 | dan hanya dapat diakses oleh super admin saja
+		 |
+		 */
 		$this->middleware('auth:admin');
-		// $this->middleware('active');
-		// $this->middleware('super');
+		$this->middleware('active');
+		$this->middleware('super');
 	}
 
 	/**
@@ -30,6 +35,13 @@ class RiwayatLoginController extends Controller
     	return parent::res( true, $data );
     }
 
+    /**
+     * me-logout semua aktifitas login admin tertentu
+     * 
+     * @param integer $id
+     * 
+     * @return JSON
+     */
     function clearAdmin($id){
     	$data = Riwayat::logoutAll( Admin::get($id) );
     	return parent::res( !!$data, Admin::get($id) );

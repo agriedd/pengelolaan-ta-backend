@@ -191,6 +191,7 @@ class AdminRepository extends Repository
              * 
              */
 			$auth->guard("admin")->setUser($admin);
+			$request->guard = "admin";
 
             /**
              * @var update waktu kadaluarsa token +1 minggu
